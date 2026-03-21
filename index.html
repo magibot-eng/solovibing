@@ -67,6 +67,26 @@
  "label": ["Space Grotesk"]
  },
  borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+ animation: {
+ 'pulse-slow': 'pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+ 'glitch': 'glitch 2s infinite',
+ 'marquee': 'marquee 20s linear infinite',
+ },
+ keyframes: {
+ 'pulse-slow': {
+ '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+ '50%': { opacity: '0.9', transform: 'scale(1.01)' },
+ },
+ 'glitch': {
+ '0%, 100%': { transform: 'translate(0)' },
+ '33%': { transform: 'translate(-2px, 2px)' },
+ '66%': { transform: 'translate(2px, -2px)' },
+ },
+ 'marquee': {
+ '0%': { transform: 'translateX(0)' },
+ '100%': { transform: 'translateX(-50%)' },
+ },
+ },
  },
  },
  }
@@ -84,7 +104,7 @@
  background: linear-gradient(180deg, transparent, #c3f5ff, transparent);
  }
  .glow-hover:hover {
- box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+ box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
  }
  ::-webkit-scrollbar { width: 4px; }
  ::-webkit-scrollbar-track { background: #131313; }
@@ -94,69 +114,108 @@
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
 <!-- TopNavBar -->
-<nav class="bg-[#131313] border-b border-outline-variant/20 px-12 py-8">
+<nav class="bg-[#131313]/80 backdrop-blur-md border-b border-outline-variant/20 px-6 py-4 sticky top-0 z-50">
  <div class="max-w-screen-xl mx-auto flex justify-between items-center">
- <span class="font-headline font-black text-xl text-primary">SOLO VIBING</span>
- <div class="flex gap-8 font-label text-[10px] tracking-widest uppercase text-outline">
- <a href="#work" class="hover:text-primary transition-colors">WORK</a>
- <a href="#manifesto" class="hover:text-primary transition-colors">MANIFESTO</a>
- <a href="#connect" class="hover:text-primary transition-colors">CONNECT</a>
+ <span class="font-headline font-black text-lg text-primary tracking-wider">SOLO VIBING</span>
+ <div class="hidden md:flex items-center gap-6 font-label text-[10px] tracking-widest uppercase">
+ <a class="text-[#bac9cc] hover:text-[#00E5FF] transition-colors duration-150" href="#work">WORK</a>
+ <a class="text-[#bac9cc] hover:text-[#00E5FF] transition-colors duration-150" href="#manifesto">MANIFESTO</a>
+ <a class="text-[#bac9cc] hover:text-[#00E5FF] transition-colors duration-150" href="#connect">CONNECT</a>
  </div>
+ <button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-5 py-2 font-black tracking-widest text-xs hover:scale-105 transition-transform">
+ CONNECT
+ </button>
  </div>
 </nav>
 
 <main>
 
 <!-- Hero -->
-<section class="px-12 pt-20 pb-32 max-w-screen-xl mx-auto">
- <div class="max-w-2xl">
- <p class="font-label text-[10px] tracking-widest uppercase text-outline mb-6">Portfolio — 2024–∞</p>
- <h1 class="font-headline text-[64px] md:text-[96px] font-black uppercase leading-[0.85] tracking-tighter text-on-surface">
- Exploring<br/><span class="text-primary">gamification</span><br/>design with AI
- </h1>
- <p class="text-on-surface-variant mt-8 text-lg max-w-md leading-relaxed">
- A collection of mathematical certainties expressed through light and code. Building things that feel like games.
- </p>
- </div>
+<section class="relative min-h-[85vh] flex flex-col items-center justify-center px-6 overflow-hidden">
+<!-- Background concentric circles -->
+<div class="absolute inset-0 z-0 opacity-15 pointer-events-none">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-outline-variant/30 rounded-full"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-outline-variant/40 rounded-full"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-primary/20 rounded-full"></div>
+</div>
 
- <div class="font-label text-[10px] tracking-widest uppercase text-outline pb-2 border-b border-outline-variant/20 mt-16">
- Category: Digital Artifacts
- </div>
+<div class="relative z-10 text-center max-w-4xl mx-auto">
+<!-- Status badge -->
+<div class="mb-8 inline-flex items-center gap-2 px-3 py-1 border border-outline-variant/20 bg-surface-container-low">
+<span class="w-1.5 h-1.5 bg-primary-container animate-ping"></span>
+<span class="font-label text-[10px] tracking-[0.3em] uppercase text-on-surface-variant">System Online v2.0 // LOCAL_VIBE_SYNC</span>
+</div>
+
+<h1 class="font-headline text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8 animate-pulse-slow">
+ EXPLORING<br/><span class="text-transparent bg-clip-text bg-gradient-to-b from-primary to-primary-container/40">GAMIFICATION</span><br/>DESIGN WITH AI
+ </h1>
+<p class="font-body text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 leading-relaxed">
+ We strip away the noise to find the signal. An indie studio building high-performance digital artifacts for the next iteration of the web.
+ </p>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+<a class="group relative px-10 py-4 bg-primary text-on-primary font-headline font-bold uppercase tracking-widest transition-all glow-hover overflow-hidden" href="#work">
+<span class="relative z-10">Explore Works</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</a>
+<a class="px-10 py-4 border border-outline-variant/30 text-primary font-headline font-bold uppercase tracking-widest hover:bg-surface-container-low transition-colors" href="#manifesto">
+ The Manifesto
+ </a>
+</div>
+</div>
+
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+<span class="font-label text-[10px] tracking-widest uppercase text-outline">Scroll Down</span>
+<div class="w-px h-16 bg-gradient-to-b from-primary to-transparent relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1/2 bg-white animate-bounce"></div>
+</div>
+</div>
 </section>
 
 <!-- Bento Grid -->
-<section class="px-12 pb-20 max-w-screen-xl mx-auto" id="work">
+<section class="py-32 px-12 max-w-screen-xl mx-auto" id="work">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-xl">
+<div class="text-[10px] font-label tracking-[0.4em] text-outline-variant mb-4 uppercase">/ PROJECTS / ARCHIVE_01</div>
+<h2 class="font-headline text-4xl font-bold uppercase tracking-tighter mb-4 text-primary">Vibe-coded Apps</h2>
+<p class="text-on-surface-variant font-body">Our portfolio is a collection of mathematical certainties expressed through light and code.</p>
+</div>
+<div class="font-label text-[10px] tracking-widest uppercase text-outline pb-2 border-b border-outline-variant/20 flex items-center gap-3">
+<span class="animate-pulse text-primary">●</span> Category: Digital Artifacts
+</div>
+</div>
+
 <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
 
 <!-- Large Card: News Claw -->
-<a href="https://news.solovibing.com" target="_blank" class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden group cursor-pointer border border-outline-variant/5 hover:border-primary/20 transition-all no-underline">
+<a href="https://news.solovibing.com" target="_blank" class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden group cursor-pointer border border-outline-variant/5 hover:border-primary/40 transition-all">
 <div class="relative z-10 h-full flex flex-col justify-between">
 <div>
 <span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 001</span>
-<h3 class="font-headline text-3xl font-black mt-4 uppercase">News Claw</h3>
+<h3 class="font-headline text-3xl font-black mt-4 uppercase group-hover:tracking-wider transition-all duration-500">News Claw</h3>
 </div>
 <div class="mt-20">
 <p class="text-on-surface-variant max-w-md mb-6">A Slay the Spire-inspired news reader. Pick a category, click cards to read summaries, clear the deck.</p>
-<span class="flex items-center gap-2 text-primary font-label text-xs tracking-widest group-hover:gap-4 transition-all">
- READ THE NEWS <span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="flex items-center gap-2 text-primary font-label text-xs tracking-widest group-hover:gap-6 transition-all">
+ READ THE NEWS <span class="material-symbols-outlined text-sm animate-pulse">arrow_forward</span>
 </span>
 </div>
 </div>
-<div class="absolute top-0 right-0 w-2/3 h-full opacity-20 group-hover:opacity-40 transition-opacity">
-<img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Abstract geometric blue patterns"/>
+<div class="absolute top-0 right-0 w-2/3 h-full opacity-20 group-hover:opacity-60 transition-all duration-700 scale-100 group-hover:scale-110">
+<img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Abstract geometric patterns"/>
 </div>
 <div class="absolute top-4 left-4 w-1 h-1 bg-tertiary"></div>
 <div class="absolute bottom-4 right-4 w-1 h-1 bg-tertiary"></div>
 </a>
 
-<!-- Small Card 1: Ho Yuen Bakery -->
-<a href="https://magibot-eng.github.io/ho-yuen-bakery/" target="_blank" class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/20 transition-all no-underline">
+<!-- Small Card: Ho Yuen Bakery -->
+<div class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/40 transition-all">
 <div class="aspect-square bg-surface border border-outline-variant/20 mb-8 flex items-center justify-center p-8 relative overflow-hidden">
-<div class="absolute inset-0 opacity-10">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
 <div class="w-full h-full" style="background-image: radial-gradient(circle at 2px 2px, #c3f5ff 1px, transparent 0); background-size: 24px 24px;"></div>
 </div>
-<div class="w-24 h-24 border-2 border-primary rotate-45 flex items-center justify-center">
-<div class="w-12 h-12 border border-primary/50 -rotate-12"></div>
+<div class="w-24 h-24 border-2 border-primary rotate-45 flex items-center justify-center group-hover:rotate-[135deg] transition-transform duration-1000">
+<div class="w-12 h-12 border border-primary/50 -rotate-12 group-hover:rotate-12 transition-transform duration-700"></div>
 </div>
 </div>
 <div>
@@ -164,14 +223,14 @@
 <h3 class="font-headline text-xl font-black mt-2 uppercase">Ho Yuen Cafe</h3>
 <p class="text-on-surface-variant text-sm mt-4">HK-style bakery e-commerce. Pickup-only. Red and gold brand.</p>
 </div>
-</a>
+</div>
 
-<!-- Small Card 2 -->
-<div class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/20 transition-all">
+<!-- Small Card: Solo Vibing -->
+<div class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/40 transition-all">
 <div class="aspect-square bg-surface border border-outline-variant/20 mb-8 flex items-center justify-center p-8 relative overflow-hidden">
-<div class="w-full h-px bg-primary/30 absolute top-1/2"></div>
-<div class="w-px h-full bg-primary/30 absolute left-1/2"></div>
-<div class="w-16 h-16 bg-primary-container relative z-10"></div>
+<div class="w-full h-px bg-primary/30 absolute top-1/2 group-hover:w-0 transition-all duration-500"></div>
+<div class="w-px h-full bg-primary/30 absolute left-1/2 group-hover:h-0 transition-all duration-500"></div>
+<div class="w-16 h-16 bg-primary-container relative z-10 group-hover:rotate-90 transition-transform duration-500"></div>
 </div>
 <div>
 <span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 003</span>
@@ -181,66 +240,77 @@
 </div>
 
 <!-- Medium Card: More coming -->
-<div class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden border border-outline-variant/5 transition-all">
+<div class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden group border border-outline-variant/5 hover:border-primary/40 transition-all">
 <div class="flex flex-col md:flex-row gap-12 items-center h-full">
-<div class="w-full md:w-1/2">
-<img class="grayscale brightness-75" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="More coming soon"/>
+<div class="w-full md:w-1/2 overflow-hidden">
+<img class="grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="More coming soon"/>
 </div>
 <div class="w-full md:w-1/2">
 <span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 004</span>
 <h3 class="font-headline text-3xl font-black mt-4 uppercase">More coming</h3>
 <p class="text-on-surface-variant mt-6 mb-8">New projects in the works. Gamification, AI, and the spaces between.</p>
-<span class="material-symbols-outlined text-primary text-3xl">hourglass_empty</span>
+<span class="material-symbols-outlined text-primary text-3xl group-hover:rotate-45 transition-transform duration-300">hourglass_empty</span>
 </div>
 </div>
 </div>
+
 </div>
 </section>
 
-<!-- The Manifesto Section -->
-<section class="bg-surface-container-lowest py-40 border-y border-outline-variant/5" id="manifesto">
-<div class="max-w-screen-xl mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-24">
+<!-- Manifesto Section -->
+<section class="bg-surface-container-lowest py-40 border-y border-outline-variant/5 relative" id="manifesto">
+<div class="max-w-screen-xl mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-24 relative z-10">
 <div>
-<h2 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter text-on-surface leading-[0.8]">THE<br/><span class="text-primary">MANIFESTO</span></h2>
+<h2 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8]">THE<br/><span class="text-primary hover:tracking-widest transition-all duration-1000 cursor-default">MANIFESTO</span></h2>
+<div class="mt-8 flex items-center gap-4 text-outline font-label text-[10px] tracking-[0.2em]">
+<span>REV_3.2</span>
+<span class="w-12 h-px bg-outline/20"></span>
+<span>EST_2024</span>
+</div>
 </div>
 <div class="space-y-12">
-<div>
-<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase">01. Eliminate</h4>
-<p class="text-on-surface-variant text-xl leading-relaxed">If it doesn't add value, it subtracts clarity. We remove the clutter until only the essence remains. Rounded corners are for children; we prefer the sharp edge of intent.</p>
+<div class="group">
+<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase group-hover:text-primary transition-colors">01. Eliminate</h4>
+<p class="text-on-surface-variant text-xl leading-relaxed border-l-2 border-transparent group-hover:border-primary/30 pl-0 group-hover:pl-6 transition-all duration-500">If it doesn't add value, it subtracts clarity. We remove the clutter until only the essence remains. Rounded corners are for children; we prefer the sharp edge of intent.</p>
 </div>
-<div>
-<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase">02. Illuminate</h4>
-<p class="text-on-surface-variant text-xl leading-relaxed">Contrast is our primary tool. We use light to guide focus and darkness to create depth. A well-designed interface should feel like a cockpit in a storm.</p>
+<div class="group">
+<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase group-hover:text-primary transition-colors">02. Illuminate</h4>
+<p class="text-on-surface-variant text-xl leading-relaxed border-l-2 border-transparent group-hover:border-primary/30 pl-0 group-hover:pl-6 transition-all duration-500">Contrast is our primary tool. We use light to guide focus and darkness to create depth. A well-designed interface should feel like a cockpit in a storm.</p>
 </div>
-<div>
-<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase">03. Automate</h4>
-<p class="text-on-surface-variant text-xl leading-relaxed">Precision is mathematically driven. Human error is minimized through rigorous systems thinking and automated aesthetics.</p>
+<div class="group">
+<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase group-hover:text-primary transition-colors">03. Automate</h4>
+<p class="text-on-surface-variant text-xl leading-relaxed border-l-2 border-transparent group-hover:border-primary/30 pl-0 group-hover:pl-6 transition-all duration-500">Precision is mathematically driven. Human error is minimized through rigorous systems thinking and automated aesthetics.</p>
 </div>
 </div>
 </div>
+<!-- Subtle back-grid -->
+<div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-size: 100px 100px; background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px);"></div>
 </section>
 
 <!-- Connect Section -->
 <section class="py-32 px-12 max-w-4xl mx-auto text-center" id="connect">
 <h2 class="font-headline text-4xl font-black uppercase tracking-tighter mb-4 text-primary">Get in Touch</h2>
 <p class="text-on-surface-variant mb-16">Ready to build something? Reach out below.</p>
-<form class="space-y-12 text-left" onsubmit="event.preventDefault(); this.innerHTML='<p class=\'text-primary font-headline text-xl\'>Message sent. We\'ll be in touch.</p>'">
+<form class="space-y-12 text-left" onsubmit="event.preventDefault(); this.innerHTML='<p class=\'text-primary font-headline text-xl py-8\'>Message sent. We\'ll be in touch.</p>'">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-<div class="relative">
-<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2">Name</label>
+<div class="relative group">
+<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2 group-focus-within:text-primary transition-colors">Name</label>
 <input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest" placeholder="YOUR_NAME" type="text" required/>
+<div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-focus-within:w-full transition-all duration-500"></div>
 </div>
-<div class="relative">
-<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2">Email</label>
+<div class="relative group">
+<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2 group-focus-within:text-primary transition-colors">Email</label>
 <input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest" placeholder="YOUR@EMAIL" type="email" required/>
+<div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-focus-within:w-full transition-all duration-500"></div>
 </div>
 </div>
-<div class="relative">
-<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2">Message</label>
+<div class="relative group">
+<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2 group-focus-within:text-primary transition-colors">Message</label>
 <textarea class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest resize-none" placeholder="YOUR_MESSAGE" rows="4" required></textarea>
+<div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-focus-within:w-full transition-all duration-500"></div>
 </div>
 <div class="pt-8 flex justify-center">
-<button class="group relative px-16 py-5 bg-surface-container-high text-primary border border-primary/20 font-headline font-black uppercase tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all glow-hover" type="submit">
+<button class="group px-16 py-5 bg-surface-container-high text-primary border border-primary/20 font-headline font-black uppercase tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all glow-hover" type="submit">
  Send Message
  </button>
 </div>
@@ -254,11 +324,11 @@
 <div class="flex flex-col md:flex-row justify-between items-center px-12 py-10 w-full max-w-screen-2xl mx-auto gap-8">
 <div class="text-lg font-bold text-[#c3f5ff]">SOLO VIBING</div>
 <div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc] flex gap-8">
-<a class="hover:text-[#00E5FF] underline-offset-4 hover:underline" href="#work">WORK</a>
-<a class="hover:text-[#00E5FF] underline-offset-4 hover:underline" href="#manifesto">MANIFESTO</a>
-<a class="hover:text-[#00E5FF] underline-offset-4 hover:underline" href="#connect">CONTACT</a>
+<a class="hover:text-[#00E5FF] transition-colors" href="#work">WORK</a>
+<a class="hover:text-[#00E5FF] transition-colors" href="#manifesto">MANIFESTO</a>
+<a class="hover:text-[#00E5FF] transition-colors" href="#connect">CONTACT</a>
 </div>
-<div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc]">
+<div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc]/60">
  ©2024 SOLO VIBING. PRECISION OVER FLUFF.
  </div>
 </div>
@@ -267,12 +337,25 @@
 <!-- Geometric Accent Ornaments -->
 <div class="fixed top-24 left-6 hidden xl:block pointer-events-none">
 <div class="data-beam-v h-32 mb-4"></div>
-<div class="w-1.5 h-1.5 bg-primary"></div>
+<div class="w-1.5 h-1.5 bg-primary animate-pulse"></div>
+<div class="font-label text-[7px] text-outline mt-4 tracking-widest opacity-40">UPLINK_ESTABLISHED</div>
 </div>
 <div class="fixed bottom-24 right-6 hidden xl:block pointer-events-none text-right">
 <div class="font-label text-[8px] text-outline-variant tracking-widest mb-4 [writing-mode:vertical-rl]">SOLO_VIBING_001</div>
 <div class="w-1.5 h-1.5 bg-tertiary ml-auto"></div>
 <div class="data-beam-v h-32 mt-4 ml-auto"></div>
+</div>
+
+<!-- Floating Status Ticker -->
+<div class="fixed bottom-6 left-12 z-[60] flex items-center gap-4 pointer-events-none">
+<div class="bg-surface-container-high/80 backdrop-blur px-3 py-1.5 border border-outline-variant/20 flex items-center gap-3">
+<div class="w-1 h-1 bg-primary rounded-full animate-ping"></div>
+<div class="font-label text-[8px] tracking-[0.2em] text-on-surface-variant overflow-hidden whitespace-nowrap">
+<span class="inline-block animate-marquee">
+ System: ACTIVE // BANDWIDTH: OPTIMAL // ENCRYPTION: AES-256 // VIBE: SHARP //
+ </span>
+</div>
+</div>
 </div>
 
 </body>
