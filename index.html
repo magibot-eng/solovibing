@@ -1,578 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solo Vibing — Agent Dev Playbook</title>
-  <style>
-    :root {
-      --bg: #0f1117;
-      --bg-card: #161b22;
-      --bg-hover: #1c2128;
-      --border: #30363d;
-      --text: #e6edf3;
-      --text-muted: #7d8590;
-      --accent: #58a6ff;
-      --accent-dim: #1f6feb;
-      --tag-bg: #1f2937;
-      --success: #3fb950;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* Header */
-    .header {
-      border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, var(--accent-dim), #7c3aed);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 24px;
-    }
-
-    .nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
-    .nav a:hover, .nav a.active {
-      color: var(--text);
-    }
-
-    .cta {
-      background: var(--accent-dim);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .cta:hover {
-      background: var(--accent);
-    }
-
-    /* Hero */
-    .hero {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 80px 24px;
-      text-align: center;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      color: var(--accent);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      margin-bottom: 20px;
-      letter-spacing: 0.5px;
-    }
-
-    .hero h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      max-width: 560px;
-      margin: 0 auto 32px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-
-    /* Sections */
-    .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 48px 24px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-
-    .section-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-
-    .see-all {
-      color: var(--accent);
-      font-size: 0.85rem;
-      text-decoration: none;
-    }
-
-    /* Category Grid */
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .category-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px;
-      transition: all 0.2s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .category-card:hover {
-      border-color: var(--accent);
-      background: var(--bg-hover);
-      transform: translateY(-2px);
-    }
-
-    .category-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--tag-bg);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      font-size: 20px;
-    }
-
-    .category-card h3 {
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .category-card p {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .category-count {
-      display: inline-block;
-      background: var(--tag-bg);
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      margin-top: 12px;
-    }
-
-    /* Article Cards */
-    .article-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
-
-    .article-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      transition: all 0.2s;
-    }
-
-    .article-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .article-img {
-      height: 160px;
-      background: linear-gradient(135deg, var(--accent-dim), #7c3aed);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-    }
-
-    .article-content {
-      padding: 20px;
-    }
-
-    .article-tag {
-      color: var(--accent);
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .article-card h3 {
-      font-size: 1.05rem;
-      margin: 8px 0 10px;
-      line-height: 1.4;
-    }
-
-    .article-card p {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .article-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 16px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .article-meta img {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent-dim);
-    }
-
-    /* Tools Grid */
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .tool-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
-      display: flex;
-      gap: 16px;
-      transition: all 0.2s;
-    }
-
-    .tool-card:hover {
-      border-color: var(--accent);
-    }
-
-    .tool-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--tag-bg);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .tool-info h3 {
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .tool-info p {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-
-    .tool-links {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .tool-link {
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-decoration: none;
-      padding: 4px 8px;
-      background: var(--tag-bg);
-      border-radius: 4px;
-    }
-
-    /* Footer */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 24px;
-      margin-top: 60px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-
-    .footer-links a:hover {
-      color: var(--text);
-    }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      .nav { display: none; }
-      .hero h1 { font-size: 2rem; }
-      .hero-actions { flex-direction: column; }
-      .btn-primary, .btn-secondary { text-align: center; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solo Vibing — Exploring Gamification Design with AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+ tailwind.config = {
+ darkMode: "class",
+ theme: {
+ extend: {
+ colors: {
+ "outline": "#849396",
+ "on-error": "#690005",
+ "on-primary": "#00363d",
+ "surface": "#131313",
+ "primary-fixed-dim": "#00daf3",
+ "on-error-container": "#ffdad6",
+ "on-surface": "#e5e2e1",
+ "on-surface-variant": "#bac9cc",
+ "on-primary-container": "#00626e",
+ "inverse-on-surface": "#313030",
+ "on-background": "#e5e2e1",
+ "surface-container-high": "#2a2a2a",
+ "secondary-fixed": "#b3ecf7",
+ "background": "#131313",
+ "tertiary-fixed": "#ffdf96",
+ "primary-container": "#00e5ff",
+ "on-secondary": "#00363d",
+ "surface-bright": "#3a3939",
+ "on-tertiary-fixed": "#251a00",
+ "primary": "#c3f5ff",
+ "on-tertiary": "#3e2e00",
+ "surface-tint": "#00daf3",
+ "surface-container-low": "#1c1b1b",
+ "tertiary-fixed-dim": "#f3bf26",
+ "error": "#ffb4ab",
+ "tertiary-container": "#fec931",
+ "surface-container": "#201f1f",
+ "error-container": "#93000a",
+ "on-secondary-fixed-variant": "#0d4e57",
+ "surface-variant": "#353534",
+ "primary-fixed": "#9cf0ff",
+ "on-tertiary-container": "#6f5500",
+ "inverse-primary": "#006875",
+ "on-tertiary-fixed-variant": "#594400",
+ "tertiary": "#ffeac0",
+ "secondary": "#98d0da",
+ "inverse-surface": "#e5e2e1",
+ "on-primary-fixed": "#001f24",
+ "secondary-fixed-dim": "#98d0da",
+ "secondary-container": "#11505a",
+ "surface-container-lowest": "#0e0e0e",
+ "surface-dim": "#131313",
+ "on-primary-fixed-variant": "#004f58",
+ "on-secondary-container": "#8ac1cc",
+ "outline-variant": "#3b494c",
+ "surface-container-highest": "#353534",
+ "on-secondary-fixed": "#001f24"
+ },
+ fontFamily: {
+ "headline": ["Space Grotesk"],
+ "body": ["Inter"],
+ "label": ["Space Grotesk"]
+ },
+ borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+ },
+ },
+ }
+</script>
+<style>
+ .material-symbols-outlined {
+ font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+ }
+ .data-beam-h {
+ height: 1px;
+ background: linear-gradient(90deg, transparent, #c3f5ff, transparent);
+ }
+ .data-beam-v {
+ width: 1px;
+ background: linear-gradient(180deg, transparent, #c3f5ff, transparent);
+ }
+ .glow-hover:hover {
+ box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+ }
+ ::-webkit-scrollbar { width: 4px; }
+ ::-webkit-scrollbar-track { background: #131313; }
+ ::-webkit-scrollbar-thumb { background: #3b494c; }
+</style>
 </head>
-<body>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <div class="logo-icon">⚡</div>
-      <span>Solo Vibing</span>
-    </div>
-    <nav class="nav">
-      <a href="#">Playbook</a>
-      <a href="#">Builds</a>
-      <a href="#">Tools</a>
-      <a href="#">About</a>
-    </nav>
-    <a href="#" class="cta">Subscribe</a>
-  </header>
+<!-- TopNavBar -->
+<nav class="bg-[#131313] border-b border-outline-variant/20 px-12 py-8">
+ <div class="max-w-screen-xl mx-auto flex justify-between items-center">
+ <span class="font-headline font-black text-xl text-primary">SOLO VIBING</span>
+ <div class="flex gap-8 font-label text-[10px] tracking-widest uppercase text-outline">
+ <a href="#work" class="hover:text-primary transition-colors">WORK</a>
+ <a href="#manifesto" class="hover:text-primary transition-colors">MANIFESTO</a>
+ <a href="#connect" class="hover:text-primary transition-colors">CONNECT</a>
+ </div>
+ </div>
+</nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <span class="hero-badge">📖 AGENT DEV PLAYBOOK</span>
-    <h1>Build better agents,<br>ship faster.</h1>
-    <p>Practical guides, workflows, and hard-won lessons from building AI agents in production. No fluff. Just what works.</p>
-    <div class="hero-actions">
-      <a href="#categories" class="btn-primary">Explore Topics</a>
-      <a href="#" class="btn-secondary">Read Latest</a>
-    </div>
-  </section>
+<main>
 
-  <!-- Categories -->
-  <section class="section" id="categories">
-    <div class="section-header">
-      <h2 class="section-title">Browse by Topic</h2>
-      <a href="#" class="see-all">View all →</a>
-    </div>
-    <div class="category-grid">
-      <a href="#" class="category-card">
-        <div class="category-icon">🎯</div>
-        <h3>Agent Architecture</h3>
-        <p>Memory, personas, tool routing, and orchestration patterns</p>
-        <span class="category-count">12 articles</span>
-      </a>
-      <a href="#" class="category-card">
-        <div class="category-icon">🔧</div>
-        <h3>Tooling & Stack</h3>
-        <p>OpenClaw, Ollama, APIs, and the dev environment setup</p>
-        <span class="category-count">8 articles</span>
-      </a>
-      <a href="#" class="category-card">
-        <div class="category-icon">⚡</div>
-        <h3>Prompts & Triggers</h3>
-        <p>Writing effective prompts, error handling, and response formats</p>
-        <span class="category-count">15 articles</span>
-      </a>
-      <a href="#" class="category-card">
-        <div class="category-icon">🚀</div>
-        <h3>Deployment</h3>
-        <p>Hosting, scaling, monitoring, and keeping costs in check</p>
-        <span class="category-count">6 articles</span>
-      </a>
-      <a href="#" class="category-card">
-        <div class="category-icon">📚</div>
-        <h3>Case Studies</h3>
-        <p>Real projects dissected — what worked, what broke, what I'd do differently</p>
-        <span class="category-count">4 articles</span>
-      </a>
-      <a href="#" class="category-card">
-        <div class="category-icon">💡</div>
-        <h3>Quick Wins</h3>
-        <p>Fast experiments, prototypes, and MVPs you can ship this week</p>
-        <span class="category-count">9 articles</span>
-      </a>
-    </div>
-  </section>
+<!-- Hero -->
+<section class="px-12 pt-20 pb-32 max-w-screen-xl mx-auto">
+ <div class="max-w-2xl">
+ <p class="font-label text-[10px] tracking-widest uppercase text-outline mb-6">Portfolio — 2024–∞</p>
+ <h1 class="font-headline text-[64px] md:text-[96px] font-black uppercase leading-[0.85] tracking-tighter text-on-surface">
+ Exploring<br/><span class="text-primary">gamification</span><br/>design with AI
+ </h1>
+ <p class="text-on-surface-variant mt-8 text-lg max-w-md leading-relaxed">
+ A collection of mathematical certainties expressed through light and code. Building things that feel like games.
+ </p>
+ </div>
 
-  <!-- Latest Articles -->
-  <section class="section">
-    <div class="section-header">
-      <h2 class="section-title">Latest</h2>
-      <a href="#" class="see-all">All articles →</a>
-    </div>
-    <div class="article-grid">
-      <article class="article-card">
-        <div class="article-img">🧠</div>
-        <div class="article-content">
-          <span class="article-tag">Agent Architecture</span>
-          <h3>Designing memory systems that actually persist across sessions</h3>
-          <p>Why simple file-based memory beats vector DBs for personal agents, and the exact structure I use.</p>
-          <div class="article-meta">
-            <div></div>
-            <span>8 min read</span>
-            <span>•</span>
-            <span>Mar 18, 2026</span>
-          </div>
-        </div>
-      </article>
-      <article class="article-card">
-        <div class="article-img">⚡</div>
-        <div class="article-content">
-          <span class="article-tag">Tooling</span>
-          <h3>How I set up Magi as a sub-agent — and what I'd change</h3>
-          <p>The tool restrictions, communication protocol, and reporting format that made it work.</p>
-          <div class="article-meta">
-            <div></div>
-            <span>12 min read</span>
-            <span>•</span>
-            <span>Mar 17, 2026</span>
-          </div>
-        </div>
-      </article>
-      <article class="article-card">
-        <div class="article-img">💸</div>
-        <div class="article-content">
-          <span class="article-tag">Deployment</span>
-          <h3>Cutting my AI bill by 60% without losing capability</h3>
-          <p>Model routing, caching strategies, and when to use cheap models vs. premium ones.</p>
-          <div class="article-meta">
-            <div></div>
-            <span>10 min read</span>
-            <span>•</span>
-            <span>Mar 14, 2026</span>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
+ <div class="font-label text-[10px] tracking-widest uppercase text-outline pb-2 border-b border-outline-variant/20 mt-16">
+ Category: Digital Artifacts
+ </div>
+</section>
 
-  <!-- Tools & Resources -->
-  <section class="section">
-    <div class="section-header">
-      <h2 class="section-title">Tools & Resources</h2>
-      <a href="#" class="see-all">Browse all →</a>
-    </div>
-    <div class="tool-grid">
-      <div class="tool-card">
-        <div class="tool-icon">🔧</div>
-        <div class="tool-info">
-          <h3>OpenClaw Agent Config</h3>
-          <p>My current OpenClaw config with MiniMax + Gemini integration</p>
-          <div class="tool-links">
-            <a href="#" class="tool-link">View Config</a>
-            <a href="#" class="tool-link">Docs</a>
-          </div>
-        </div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📝</div>
-        <div class="tool-info">
-          <h3>Prompt Templates</h3>
-          <p>SOUL.md, IDENTITY.md, and user profile templates for agent projects</p>
-          <div class="tool-links">
-            <a href="#" class="tool-link">Get Templates</a>
-          </div>
-        </div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-icon">📊</div>
-        <div class="tool-info">
-          <h3>Cost Tracking Sheet</h3>
-          <p>Spreadsheet for tracking API spend across models and projects</p>
-          <div class="tool-links">
-            <a href="#" class="tool-link">Copy Sheet</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- Bento Grid -->
+<section class="px-12 pb-20 max-w-screen-xl mx-auto" id="work">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10">
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="#">Playbook</a>
-      <a href="#">GitHub</a>
-      <a href="#">Twitter</a>
-      <a href="#">RSS</a>
-    </div>
-    <p>© 2026 Solo Vibing · Built with agents</p>
-  </footer>
+<!-- Large Card: News Claw -->
+<a href="https://news.solovibing.com" target="_blank" class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden group cursor-pointer border border-outline-variant/5 hover:border-primary/20 transition-all no-underline">
+<div class="relative z-10 h-full flex flex-col justify-between">
+<div>
+<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 001</span>
+<h3 class="font-headline text-3xl font-black mt-4 uppercase">News Claw</h3>
+</div>
+<div class="mt-20">
+<p class="text-on-surface-variant max-w-md mb-6">A Slay the Spire-inspired news reader. Pick a category, click cards to read summaries, clear the deck.</p>
+<span class="flex items-center gap-2 text-primary font-label text-xs tracking-widest group-hover:gap-4 transition-all">
+ READ THE NEWS <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-2/3 h-full opacity-20 group-hover:opacity-40 transition-opacity">
+<img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Abstract geometric blue patterns"/>
+</div>
+<div class="absolute top-4 left-4 w-1 h-1 bg-tertiary"></div>
+<div class="absolute bottom-4 right-4 w-1 h-1 bg-tertiary"></div>
+</a>
+
+<!-- Small Card 1: Ho Yuen Bakery -->
+<a href="https://magibot-eng.github.io/ho-yuen-bakery/" target="_blank" class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/20 transition-all no-underline">
+<div class="aspect-square bg-surface border border-outline-variant/20 mb-8 flex items-center justify-center p-8 relative overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+<div class="w-full h-full" style="background-image: radial-gradient(circle at 2px 2px, #c3f5ff 1px, transparent 0); background-size: 24px 24px;"></div>
+</div>
+<div class="w-24 h-24 border-2 border-primary rotate-45 flex items-center justify-center">
+<div class="w-12 h-12 border border-primary/50 -rotate-12"></div>
+</div>
+</div>
+<div>
+<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 002</span>
+<h3 class="font-headline text-xl font-black mt-2 uppercase">Ho Yuen Cafe</h3>
+<p class="text-on-surface-variant text-sm mt-4">HK-style bakery e-commerce. Pickup-only. Red and gold brand.</p>
+</div>
+</a>
+
+<!-- Small Card 2 -->
+<div class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/20 transition-all">
+<div class="aspect-square bg-surface border border-outline-variant/20 mb-8 flex items-center justify-center p-8 relative overflow-hidden">
+<div class="w-full h-px bg-primary/30 absolute top-1/2"></div>
+<div class="w-px h-full bg-primary/30 absolute left-1/2"></div>
+<div class="w-16 h-16 bg-primary-container relative z-10"></div>
+</div>
+<div>
+<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 003</span>
+<h3 class="font-headline text-xl font-black mt-2 uppercase">Solo Vibing</h3>
+<p class="text-on-surface-variant text-sm mt-4">This site. Building the brand, one project at a time.</p>
+</div>
+</div>
+
+<!-- Medium Card: More coming -->
+<div class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden border border-outline-variant/5 transition-all">
+<div class="flex flex-col md:flex-row gap-12 items-center h-full">
+<div class="w-full md:w-1/2">
+<img class="grayscale brightness-75" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="More coming soon"/>
+</div>
+<div class="w-full md:w-1/2">
+<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 004</span>
+<h3 class="font-headline text-3xl font-black mt-4 uppercase">More coming</h3>
+<p class="text-on-surface-variant mt-6 mb-8">New projects in the works. Gamification, AI, and the spaces between.</p>
+<span class="material-symbols-outlined text-primary text-3xl">hourglass_empty</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- The Manifesto Section -->
+<section class="bg-surface-container-lowest py-40 border-y border-outline-variant/5" id="manifesto">
+<div class="max-w-screen-xl mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-24">
+<div>
+<h2 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter text-on-surface leading-[0.8]">THE<br/><span class="text-primary">MANIFESTO</span></h2>
+</div>
+<div class="space-y-12">
+<div>
+<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase">01. Eliminate</h4>
+<p class="text-on-surface-variant text-xl leading-relaxed">If it doesn't add value, it subtracts clarity. We remove the clutter until only the essence remains. Rounded corners are for children; we prefer the sharp edge of intent.</p>
+</div>
+<div>
+<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase">02. Illuminate</h4>
+<p class="text-on-surface-variant text-xl leading-relaxed">Contrast is our primary tool. We use light to guide focus and darkness to create depth. A well-designed interface should feel like a cockpit in a storm.</p>
+</div>
+<div>
+<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase">03. Automate</h4>
+<p class="text-on-surface-variant text-xl leading-relaxed">Precision is mathematically driven. Human error is minimized through rigorous systems thinking and automated aesthetics.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Connect Section -->
+<section class="py-32 px-12 max-w-4xl mx-auto text-center" id="connect">
+<h2 class="font-headline text-4xl font-black uppercase tracking-tighter mb-4 text-primary">Get in Touch</h2>
+<p class="text-on-surface-variant mb-16">Ready to build something? Reach out below.</p>
+<form class="space-y-12 text-left" onsubmit="event.preventDefault(); this.innerHTML='<p class=\'text-primary font-headline text-xl\'>Message sent. We\'ll be in touch.</p>'">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="relative">
+<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2">Name</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest" placeholder="YOUR_NAME" type="text" required/>
+</div>
+<div class="relative">
+<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2">Email</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest" placeholder="YOUR@EMAIL" type="email" required/>
+</div>
+</div>
+<div class="relative">
+<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2">Message</label>
+<textarea class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest resize-none" placeholder="YOUR_MESSAGE" rows="4" required></textarea>
+</div>
+<div class="pt-8 flex justify-center">
+<button class="group relative px-16 py-5 bg-surface-container-high text-primary border border-primary/20 font-headline font-black uppercase tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all glow-hover" type="submit">
+ Send Message
+ </button>
+</div>
+</form>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#131313] w-full mt-20 border-t border-[#3b494c]/15">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-10 w-full max-w-screen-2xl mx-auto gap-8">
+<div class="text-lg font-bold text-[#c3f5ff]">SOLO VIBING</div>
+<div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc] flex gap-8">
+<a class="hover:text-[#00E5FF] underline-offset-4 hover:underline" href="#work">WORK</a>
+<a class="hover:text-[#00E5FF] underline-offset-4 hover:underline" href="#manifesto">MANIFESTO</a>
+<a class="hover:text-[#00E5FF] underline-offset-4 hover:underline" href="#connect">CONTACT</a>
+</div>
+<div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc]">
+ ©2024 SOLO VIBING. PRECISION OVER FLUFF.
+ </div>
+</div>
+</footer>
+
+<!-- Geometric Accent Ornaments -->
+<div class="fixed top-24 left-6 hidden xl:block pointer-events-none">
+<div class="data-beam-v h-32 mb-4"></div>
+<div class="w-1.5 h-1.5 bg-primary"></div>
+</div>
+<div class="fixed bottom-24 right-6 hidden xl:block pointer-events-none text-right">
+<div class="font-label text-[8px] text-outline-variant tracking-widest mb-4 [writing-mode:vertical-rl]">SOLO_VIBING_001</div>
+<div class="w-1.5 h-1.5 bg-tertiary ml-auto"></div>
+<div class="data-beam-v h-32 mt-4 ml-auto"></div>
+</div>
 
 </body>
 </html>
