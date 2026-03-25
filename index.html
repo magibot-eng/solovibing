@@ -168,6 +168,147 @@ body{background:var(--void);color:var(--ghost);font-family:var(--font-mono);-web
 @media(max-width:768px){.corner-decor{display:none}}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}#particle-canvas{display:none!important}.particle-fallback{display:block!important}#constellation-canvas{display:none!important}}
+
+/* Lumiere sphere styles */
+#canvas-container {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  border: 1px solid rgba(74,74,90,0.2);
+  background: rgba(10,10,15,0.6);
+}
+#canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Modal */
+#modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+#modal.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-card {
+  background: rgba(20, 20, 25, 0.85);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 36px 44px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(255,255,255,0.04);
+  position: relative;
+}
+.modal-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  color: var(--ghost);
+}
+.modal-card p {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 28px;
+}
+.modal-btn {
+  display: inline-block;
+  padding: 12px 36px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.modal-btn:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: #fff; }
+
+/* Mobile horizontal scroll fallback */
+#mobile-scroll {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 14px;
+  align-items: center;
+  z-index: 10;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 768px), (hover: none) {
+  #mobile-scroll { display: flex; }
+}
+.mobile-card {
+  flex: 0 0 90px;
+  height: 110px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(20,20,25,0.8);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.mobile-card:hover, .mobile-card:active {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.mobile-card img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  display: block;
+}
+.mobile-card span {
+  display: block;
+  text-align: center;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.7);
+  padding: 4px 2px;
+  letter-spacing: 0.05em;
+}
 </style>
 </head>
 <body>
@@ -263,20 +404,13 @@ body{background:var(--void);color:var(--ghost);font-family:var(--font-mono);-web
         <div class="section-label">/ Selected work</div>
         <h2 class="section-title glitch-entry" data-text="What we've built">What we've built</h2>
       </div>
-      <div class="section-count">02 projects</div>
+      <div class="section-count">08 clips</div>
     </div>
     <div class="universe-label" id="universe-label">THE UNIVERSE SO FAR</div>
-    <div id="constellation-wrap">
-      <canvas id="constellation-canvas"></canvas>
-      <div id="node-tooltip">
-        <div class="node-tooltip-name" id="nt-name"></div>
-        <div class="node-tooltip-desc" id="nt-desc"></div>
-        <div class="node-tooltip-year" id="nt-year"></div>
-      </div>
-    </div>
+    <div id="canvas-container"></div>
     <div class="constellation-expanding">
       <span class="expanding-cursor"></span>
-      <span>EXPANDING...</span>
+      <span>DRAG TO ROTATE · SCROLL TO ZOOM</span>
     </div>
   </section>
 
@@ -845,6 +979,510 @@ function initParticles(){
     camera.updateProjectionMatrix();
   });
 }
+</script>
+
+<!-- Lumiere modal -->
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+    <h2 id="modal-title">Clip 01</h2>
+    <p>A beautiful moment captured in time</p>
+    <a href="#" class="modal-btn" id="modal-watch">Watch</a>
+  </div>
+</div>
+
+<!-- Mobile fallback scroll -->
+<div id="mobile-scroll"></div>
+
+<!-- Lumiere sphere init -->
+<script>
+/* LUMIERE SPHERE — floating clips sphere */
+(function(){
+  var CARD_COUNT = 8;
+  var CARD_LABELS = ['Clip 01','Clip 02','Clip 03','Clip 04','Clip 05','Clip 06','Clip 07','Clip 08'];
+  var CARD_WIDTH = 90;
+  var CARD_TOTAL_H = 80;
+  var SPHERE_RADIUS = 3.2;
+  var PHI = (1 + Math.sqrt(5)) / 2;
+
+  var scene, camera, renderer, clock;
+  var sphereGroup, ringsGroup, cardsGroup;
+  var cardMeshes = [];
+  var raycaster, mouse;
+  var isDragging = false, previousMouse = { x: 0, y: 0 };
+  var autoRotate = true, autoRotateTimeout;
+  var hoveredCard = null;
+  var targetZoom = 8, currentZoom = 8;
+  var isMobile = false;
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function buildCard(index) {
+    var group = new THREE.Group();
+    var w = CARD_WIDTH / 80;
+    var h = CARD_TOTAL_H / 80;
+    var geo = new THREE.PlaneGeometry(w, h);
+
+    var canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 200;
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'rgba(14,14,20,0.92)';
+    roundRect(ctx, 0, 0, 256, 200, 14);
+    ctx.fill();
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1.5;
+    roundRect(ctx, 0, 0, 256, 200, 14);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(30,30,40,1)';
+    roundRect(ctx, 10, 10, 236, 148, 8);
+    ctx.fill();
+
+    var texture = new THREE.CanvasTexture(canvas);
+    var mat = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      depthWrite: false,
+    });
+    var mesh = new THREE.Mesh(geo, mat);
+    group.add(mesh);
+
+    var glowGeo = new THREE.PlaneGeometry(w * 1.35, h * 1.35);
+    var glowMat = new THREE.MeshBasicMaterial({
+      color: 0x4488ff,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    var glowMesh = new THREE.Mesh(glowGeo, glowMat);
+    glowMesh.position.z = -0.01;
+    group.add(glowMesh);
+    group.userData.glowMesh = glowMesh;
+
+    var loadImg = (function(idx) {
+      return function() {
+        var tempCanvas = document.createElement('canvas');
+        tempCanvas.width = 236;
+        tempCanvas.height = 148;
+        var tCtx = tempCanvas.getContext('2d');
+        tCtx.fillStyle = 'rgba(30,30,40,1)';
+        tCtx.fillRect(0, 0, 236, 148);
+
+        var realImg = new Image();
+        realImg.crossOrigin = 'anonymous';
+        realImg.onload = function() {
+          tCtx.drawImage(realImg, 0, 0, 236, 148);
+          var finalCanvas = document.createElement('canvas');
+          finalCanvas.width = 256;
+          finalCanvas.height = 200;
+          var fCtx = finalCanvas.getContext('2d');
+
+          fCtx.fillStyle = 'rgba(14,14,20,0.92)';
+          roundRect(fCtx, 0, 0, 256, 200, 14);
+          fCtx.fill();
+
+          fCtx.strokeStyle = 'rgba(255,255,255,0.12)';
+          fCtx.lineWidth = 1.5;
+          roundRect(fCtx, 0, 0, 256, 200, 14);
+          fCtx.stroke();
+
+          fCtx.save();
+          roundRect(fCtx, 10, 10, 236, 148, 8);
+          fCtx.clip();
+          fCtx.drawImage(realImg, 10, 10, 236, 148);
+          fCtx.restore();
+
+          fCtx.fillStyle = 'rgba(10,10,16,0.7)';
+          fCtx.fillRect(0, 162, 256, 38);
+          fCtx.strokeStyle = 'rgba(255,255,255,0.08)';
+          fCtx.lineWidth = 1;
+          fCtx.beginPath();
+          fCtx.moveTo(0, 162);
+          fCtx.lineTo(256, 162);
+          fCtx.stroke();
+
+          fCtx.fillStyle = 'rgba(255,255,255,0.85)';
+          fCtx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+          fCtx.textAlign = 'center';
+          fCtx.fillText(CARD_LABELS[idx], 128, 186);
+
+          var finalTex = new THREE.CanvasTexture(finalCanvas);
+          mesh.material.map = finalTex;
+          mesh.material.needsUpdate = true;
+        };
+        realImg.onerror = function() {
+          var finalCanvas = document.createElement('canvas');
+          finalCanvas.width = 256;
+          finalCanvas.height = 200;
+          var fCtx = finalCanvas.getContext('2d');
+          fCtx.fillStyle = 'rgba(14,14,20,0.92)';
+          roundRect(fCtx, 0, 0, 256, 200, 14);
+          fCtx.fill();
+          fCtx.strokeStyle = 'rgba(255,255,255,0.12)';
+          fCtx.lineWidth = 1.5;
+          roundRect(fCtx, 0, 0, 256, 200, 14);
+          fCtx.stroke();
+
+          var grad = fCtx.createLinearGradient(10, 10, 246, 158);
+          grad.addColorStop(0, '#1a1a2e');
+          grad.addColorStop(1, '#0f0f1a');
+          fCtx.fillStyle = grad;
+          roundRect(fCtx, 10, 10, 236, 148, 8);
+          fCtx.fill();
+
+          fCtx.fillStyle = 'rgba(10,10,16,0.7)';
+          fCtx.fillRect(0, 162, 256, 38);
+          fCtx.fillStyle = 'rgba(255,255,255,0.85)';
+          fCtx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+          fCtx.textAlign = 'center';
+          fCtx.fillText(CARD_LABELS[idx], 128, 186);
+
+          var finalTex = new THREE.CanvasTexture(finalCanvas);
+          mesh.material.map = finalTex;
+          mesh.material.needsUpdate = true;
+        };
+        realImg.src = 'https://picsum.photos/seed/lumiere' + (idx + 1) + '/400/250';
+      };
+    })(index);
+
+    setTimeout(loadImg, index * 120 + 100);
+
+    group.userData.mat = mat;
+    group.userData.mesh = mesh;
+
+    return group;
+  }
+
+  function initSphere() {
+    isMobile = window.matchMedia('(max-width: 768px), (hover: none)').matches;
+
+    var container = document.getElementById('canvas-container');
+    if (!container) return;
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
+
+    camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.z = currentZoom;
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    clock = new THREE.Clock();
+    raycaster = new THREE.Raycaster();
+    mouse = new THREE.Vector2();
+
+    buildScene();
+    buildMobileCards();
+
+    window.addEventListener('resize', onResize);
+    renderer.domElement.addEventListener('mousedown', onMouseDown);
+    renderer.domElement.addEventListener('mousemove', onMouseMove);
+    renderer.domElement.addEventListener('mouseup', onMouseUp);
+    renderer.domElement.addEventListener('touchstart', onTouchStart, { passive: false });
+    renderer.domElement.addEventListener('touchmove', onTouchMove, { passive: false });
+    renderer.domElement.addEventListener('touchend', onTouchEnd, { passive: false });
+    renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
+    renderer.domElement.addEventListener('click', onCanvasClick);
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === document.getElementById('modal')) closeModal();
+    });
+
+    animate();
+  }
+
+  function buildScene() {
+    sphereGroup = new THREE.Group();
+    scene.add(sphereGroup);
+
+    var sphereGeo = new THREE.SphereGeometry(1.2, 32, 32);
+    var sphereMat = new THREE.MeshBasicMaterial({ color: 0x050508 });
+    var sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+    sphereGroup.add(sphereMesh);
+
+    ringsGroup = new THREE.Group();
+    sphereGroup.add(ringsGroup);
+
+    var ringDefs = [
+      { rx: 2.0, ry: 0.6, rz: 0.0, rx2: 0.0, ry2: 1.0, rz2: 0.0 },
+      { rx: 0.6, ry: 2.0, rz: 0.8, rx2: 0.0, ry2: 0.0, rz2: 1.0 },
+      { rx: 1.4, ry: 1.4, rz: 1.0, rx2: 1.0, ry2: 0.0, rz2: 0.5 },
+      { rx: 2.2, ry: 0.8, rz: 0.4, rx2: 0.2, ry2: 1.0, rz2: 0.3 },
+    ];
+
+    ringDefs.forEach(function(def, i) {
+      var geo = new THREE.TorusGeometry(1.95 + i * 0.12, 0.025, 8, 80);
+      var mat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.55 - i * 0.08,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      var ring = new THREE.Mesh(geo, mat);
+      ring.rotation.set(def.rx, def.ry, def.rz);
+      var ring2 = ring.clone();
+      ring2.rotation.set(def.rx2, def.ry2, def.rz2);
+      var grp = new THREE.Group();
+      grp.add(ring);
+      grp.add(ring2);
+      ringsGroup.add(grp);
+    });
+
+    [0, Math.PI / 3, (2 * Math.PI) / 3].forEach(function(angle, i) {
+      var geo = new THREE.TorusGeometry(2.05, 0.018, 8, 120);
+      var mat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.7 - i * 0.15,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      var ring = new THREE.Mesh(geo, mat);
+      ring.rotation.x = angle;
+      ringsGroup.add(ring);
+    });
+
+    var glowGeo = new THREE.SphereGeometry(1.5, 16, 16);
+    var glowMat = new THREE.MeshBasicMaterial({
+      color: 0x3344ff,
+      transparent: true,
+      opacity: 0.04,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    sphereGroup.add(new THREE.Mesh(glowGeo, glowMat));
+
+    cardsGroup = new THREE.Group();
+    sphereGroup.add(cardsGroup);
+
+    for (var i = 0; i < CARD_COUNT; i++) {
+      var card = buildCard(i);
+      var theta = 2 * Math.PI * i / PHI / PHI;
+      var phi = Math.acos(1 - 2 * (i + 0.5) / CARD_COUNT);
+      var r = SPHERE_RADIUS + 0.6;
+      card.userData.spherePos = new THREE.Vector3(
+        r * Math.sin(phi) * Math.cos(theta),
+        r * Math.sin(phi) * Math.sin(theta),
+        r * Math.cos(phi)
+      );
+      card.userData.baseScale = 1.0;
+      card.userData.hovered = false;
+      card.userData.label = CARD_LABELS[i];
+      card.userData.index = i;
+      cardsGroup.add(card);
+      cardMeshes.push(card);
+    }
+
+    updateCardPositions();
+  }
+
+  function updateCardPositions() {
+    cardMeshes.forEach(function(card) {
+      var worldPos = card.userData.spherePos.clone();
+      worldPos.applyEuler(cardsGroup.rotation);
+      worldPos.applyEuler(sphereGroup.rotation);
+
+      card.position.copy(worldPos);
+      card.lookAt(camera.position);
+
+      var distFromCam = camera.position.distanceTo(worldPos);
+      var depthScale = Math.max(0.35, Math.min(1.0, 6 / distFromCam));
+      var s = depthScale * card.userData.baseScale;
+      card.scale.set(s, s, s);
+      card.userData.currentDepthScale = depthScale;
+    });
+  }
+
+  function buildMobileCards() {
+    if (!isMobile) return;
+    var container = document.getElementById('mobile-scroll');
+    if (!container) return;
+    CARD_LABELS.forEach(function(label, i) {
+      var div = document.createElement('div');
+      div.className = 'mobile-card';
+      div.innerHTML = '<img src="https://picsum.photos/seed/lumiere' + (i + 1) + '/400/250" alt="' + label + '" loading="lazy"><span>' + label + '</span>';
+      div.addEventListener('click', (function(lbl) { return function() { openModal(lbl); }; })(label));
+      container.appendChild(div);
+    });
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    var delta = clock.getDelta();
+    var elapsed = clock.getElapsedTime();
+
+    if (autoRotate) {
+      sphereGroup.rotation.y += delta * 0.28;
+      sphereGroup.rotation.x = Math.sin(elapsed * 0.12) * 0.08;
+    }
+
+    currentZoom += (targetZoom - currentZoom) * 0.08;
+    camera.position.z = currentZoom;
+
+    ringsGroup.children.forEach(function(g, gi) {
+      var pulse = 0.5 + 0.5 * Math.sin(elapsed * 1.5 + gi * 0.7);
+      g.children.forEach(function(ring) {
+        if (ring.material) {
+          ring.material.opacity = (0.5 + 0.5 * pulse) * 0.6;
+        }
+      });
+    });
+
+    updateCardPositions();
+
+    cardMeshes.forEach(function(card) {
+      var glow = card.userData.glowMesh;
+      var targetOpacity = card.userData.hovered ? 0.22 : 0;
+      glow.material.opacity += (targetOpacity - glow.material.opacity) * 0.12;
+
+      var targetScale = card.userData.hovered ? 1.08 : 1.0;
+      card.userData.baseScale += (targetScale - card.userData.baseScale) * 0.1;
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  function onMouseDown(e) {
+    isDragging = true;
+    autoRotate = false;
+    previousMouse = { x: e.clientX, y: e.clientY };
+  }
+
+  function onMouseMove(e) {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    if (isDragging) {
+      var dx = e.clientX - previousMouse.x;
+      var dy = e.clientY - previousMouse.y;
+      sphereGroup.rotation.y += dx * 0.008;
+      sphereGroup.rotation.x += dy * 0.008;
+      sphereGroup.rotation.x = Math.max(-0.6, Math.min(0.6, sphereGroup.rotation.x));
+      previousMouse = { x: e.clientX, y: e.clientY };
+    }
+
+    checkHover();
+  }
+
+  function onMouseUp() {
+    isDragging = false;
+    scheduleAutoRotate();
+  }
+
+  function onTouchStart(e) {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      autoRotate = false;
+      previousMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  }
+
+  function onTouchMove(e) {
+    if (e.touches.length === 1 && isDragging) {
+      var dx = e.touches[0].clientX - previousMouse.x;
+      var dy = e.touches[0].clientY - previousMouse.y;
+      sphereGroup.rotation.y += dx * 0.01;
+      sphereGroup.rotation.x += dy * 0.01;
+      sphereGroup.rotation.x = Math.max(-0.6, Math.min(0.6, sphereGroup.rotation.x));
+      previousMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      e.preventDefault();
+    }
+  }
+
+  function onTouchEnd(e) {
+    if (e.touches.length === 0) {
+      isDragging = false;
+      scheduleAutoRotate();
+    }
+  }
+
+  function onWheel(e) {
+    e.preventDefault();
+    targetZoom += e.deltaY * 0.012;
+    targetZoom = Math.max(4, Math.min(16, targetZoom));
+  }
+
+  function checkHover() {
+    raycaster.setFromCamera(mouse, camera);
+    var intersects = raycaster.intersectObjects(cardMeshes, true);
+
+    cardMeshes.forEach(function(c) { c.userData.hovered = false; });
+    if (renderer && renderer.domElement) renderer.domElement.style.cursor = 'grab';
+
+    if (intersects.length > 0) {
+      var obj = intersects[0].object;
+      while (obj.parent && !obj.userData.spherePos) obj = obj.parent;
+      if (obj.userData.spherePos) {
+        obj.userData.hovered = true;
+        if (renderer && renderer.domElement) renderer.domElement.style.cursor = 'pointer';
+      }
+    }
+  }
+
+  function onCanvasClick(e) {
+    if (isDragging) return;
+    raycaster.setFromCamera(mouse, camera);
+    var intersects = raycaster.intersectObjects(cardMeshes, true);
+    if (intersects.length > 0) {
+      var obj = intersects[0].object;
+      while (obj.parent && obj.userData.spherePos === undefined) obj = obj.parent;
+      if (obj.userData.spherePos) {
+        openModal(obj.userData.label);
+      }
+    }
+  }
+
+  function openModal(label) {
+    document.getElementById('modal-title').textContent = label;
+    document.getElementById('modal').classList.add('open');
+    autoRotate = false;
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    scheduleAutoRotate();
+  }
+
+  function scheduleAutoRotate() {
+    clearTimeout(autoRotateTimeout);
+    autoRotateTimeout = setTimeout(function() { autoRotate = true; }, 4000);
+  }
+
+  function onResize() {
+    var container = document.getElementById('canvas-container');
+    if (!container) return;
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSphere);
+  } else {
+    setTimeout(initSphere, 100);
+  }
+})();
 </script>
 </body>
 </html>
