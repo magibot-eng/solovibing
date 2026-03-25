@@ -1,362 +1,1450 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Solo Vibing — Exploring Gamification Design with AI</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
- tailwind.config = {
- darkMode: "class",
- theme: {
- extend: {
- colors: {
- "outline": "#849396",
- "on-error": "#690005",
- "on-primary": "#00363d",
- "surface": "#131313",
- "primary-fixed-dim": "#00daf3",
- "on-error-container": "#ffdad6",
- "on-surface": "#e5e2e1",
- "on-surface-variant": "#bac9cc",
- "on-primary-container": "#00626e",
- "inverse-on-surface": "#313030",
- "on-background": "#e5e2e1",
- "surface-container-high": "#2a2a2a",
- "secondary-fixed": "#b3ecf7",
- "background": "#131313",
- "tertiary-fixed": "#ffdf96",
- "primary-container": "#00e5ff",
- "on-secondary": "#00363d",
- "surface-bright": "#3a3939",
- "on-tertiary-fixed": "#251a00",
- "primary": "#c3f5ff",
- "on-tertiary": "#3e2e00",
- "surface-tint": "#00daf3",
- "surface-container-low": "#1c1b1b",
- "tertiary-fixed-dim": "#f3bf26",
- "error": "#ffb4ab",
- "tertiary-container": "#fec931",
- "surface-container": "#201f1f",
- "error-container": "#93000a",
- "on-secondary-fixed-variant": "#0d4e57",
- "surface-variant": "#353534",
- "primary-fixed": "#9cf0ff",
- "on-tertiary-container": "#6f5500",
- "inverse-primary": "#006875",
- "on-tertiary-fixed-variant": "#594400",
- "tertiary": "#ffeac0",
- "secondary": "#98d0da",
- "inverse-surface": "#e5e2e1",
- "on-primary-fixed": "#001f24",
- "secondary-fixed-dim": "#98d0da",
- "secondary-container": "#11505a",
- "surface-container-lowest": "#0e0e0e",
- "surface-dim": "#131313",
- "on-primary-fixed-variant": "#004f58",
- "on-secondary-container": "#8ac1cc",
- "outline-variant": "#3b494c",
- "surface-container-highest": "#353534",
- "on-secondary-fixed": "#001f24"
- },
- fontFamily: {
- "headline": ["Space Grotesk"],
- "body": ["Inter"],
- "label": ["Space Grotesk"]
- },
- borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
- animation: {
- 'pulse-slow': 'pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
- 'glitch': 'glitch 2s infinite',
- 'marquee': 'marquee 20s linear infinite',
- },
- keyframes: {
- 'pulse-slow': {
- '0%, 100%': { opacity: '1', transform: 'scale(1)' },
- '50%': { opacity: '0.9', transform: 'scale(1.01)' },
- },
- 'glitch': {
- '0%, 100%': { transform: 'translate(0)' },
- '33%': { transform: 'translate(-2px, 2px)' },
- '66%': { transform: 'translate(2px, -2px)' },
- },
- 'marquee': {
- '0%': { transform: 'translateX(0)' },
- '100%': { transform: 'translateX(-50%)' },
- },
- },
- },
- },
- }
-</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Solovibing — A Signal From the Edge</title>
+<meta name="description" content="Solovibing is a creative studio building high-end digital artifacts. Precision craft. No compromises."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
- .material-symbols-outlined {
- font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
- }
- .data-beam-h {
- height: 1px;
- background: linear-gradient(90deg, transparent, #c3f5ff, transparent);
- }
- .data-beam-v {
- width: 1px;
- background: linear-gradient(180deg, transparent, #c3f5ff, transparent);
- }
- .glow-hover:hover {
- box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
- }
- ::-webkit-scrollbar { width: 4px; }
- ::-webkit-scrollbar-track { background: #131313; }
- ::-webkit-scrollbar-thumb { background: #3b494c; }
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --void: #0A0A0F;
+  --smoke: #1A1A24;
+  --terminal: #00FF88;
+  --ghost: #E8E8F0;
+  --static: #4A4A5A;
+  --amber: #FFAA00;
+  --violet: #6B00FF;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--static) var(--void);
+}
+
+body {
+  background: var(--void);
+  color: var(--ghost);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  body { cursor: auto; }
+}
+
+::selection { background: var(--terminal); color: var(--void); }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--static); }
+
+/* ─── SCROLL PROGRESS BAR ─── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--terminal), var(--violet));
+  width: 0%;
+  z-index: 9999;
+}
+
+/* ─── CUSTOM CURSOR ─── */
+#cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--terminal);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s;
+}
+
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease-out, height 0.4s ease-out, border-color 0.3s;
+}
+
+@media (max-width: 768px) {
+  #cursor, #cursor-ring { display: none; }
+}
+
+/* ─── BOOT OVERLAY ─── */
+#boot-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--void);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#boot-terminal {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--terminal);
+  max-width: 640px;
+  padding: 0 32px;
+  width: 100%;
+  line-height: 2.0;
+}
+
+#boot-terminal .line {
+  opacity: 0;
+  display: block;
+}
+
+.boot-cursor {
+  display: inline-block;
+  width: 8px; height: 14px;
+  background: var(--terminal);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 0.8s step-end infinite;
+}
+
+.boot-cursor.gone { opacity: 0; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ─── GLITCH FLASH ─── */
+#glitch-flash {
+  position: fixed;
+  inset: 0;
+  background: var(--terminal);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 8999;
+  mix-blend-mode: overlay;
+}
+
+/* ─── HUD BRACKETS ─── */
+.bracket {
+  position: absolute;
+  width: 16px; height: 16px;
+  pointer-events: none;
+}
+.bracket-tl { top: 12px; left: 12px; border-top: 1px solid var(--terminal); border-left: 1px solid var(--terminal); }
+.bracket-tr { top: 12px; right: 12px; border-top: 1px solid var(--terminal); border-right: 1px solid var(--terminal); }
+.bracket-bl { bottom: 12px; left: 12px; border-bottom: 1px solid var(--terminal); border-left: 1px solid var(--terminal); }
+.bracket-br { bottom: 12px; right: 12px; border-bottom: 1px solid var(--terminal); border-right: 1px solid var(--terminal); }
+
+/* ─── NOISE OVERLAY ─── */
+#noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8000;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* ─── SCAN LINE ─── */
+#scanline {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 7999;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0, 0, 0, 0.025) 2px, rgba(0, 0, 0, 0.025) 4px
+  );
+}
+
+/* ─── MAIN SITE ─── */
+#site { opacity: 0; }
+
+/* ─── NAV ─── */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--ghost);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-links { display: flex; gap: 40px; list-style: none; }
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(232, 232, 240, 0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--terminal); }
+
+@media (max-width: 600px) {
+  #nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+}
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 120px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--terminal);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px; height: 1px;
+  background: var(--terminal);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.8rem, 10vw, 10rem);
+  letter-spacing: -0.03em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--ghost);
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.hero-title-line { display: block; overflow: hidden; }
+
+.hero-title-inner { display: block; transform: translateY(110%); }
+
+.hero-manifesto {
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: rgba(232, 232, 240, 0.4);
+  max-width: 500px;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+
+.hero-manifesto em { color: var(--terminal); font-style: normal; }
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 40px; left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--static);
+  opacity: 0;
+}
+
+.hero-scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--static), transparent);
+}
+
+@media (max-width: 600px) {
+  #hero { padding: 100px 24px 80px; }
+  .hero-scroll-hint { left: 24px; }
+}
+
+/* ─── STUDIO SECTION ─── */
+#studio {
+  min-height: 60vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  border-top: 1px solid rgba(74, 74, 90, 0.2);
+}
+
+.studio-left {
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid rgba(74, 74, 90, 0.2);
+}
+
+.studio-right {
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-label {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--static);
+  margin-bottom: 28px;
+  font-family: var(--font-mono);
+}
+
+.studio-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ghost);
+  margin-bottom: 24px;
+}
+
+.studio-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 2.0;
+  color: rgba(232, 232, 240, 0.38);
+}
+
+.studio-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.studio-stat-num {
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--terminal);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+
+.studio-stat-label {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--static);
+  font-family: var(--font-mono);
+  margin-top: 6px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  #studio { grid-template-columns: 1fr; }
+  .studio-left { padding: 60px 24px; border-right: none; border-bottom: 1px solid rgba(74, 74, 90, 0.2); }
+  .studio-right { padding: 60px 24px; }
+}
+
+/* ─── WORK SECTION ─── */
+#work {
+  padding: 120px 60px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+  letter-spacing: -0.02em;
+  color: var(--ghost);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.section-count {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--static);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+/* ─── PROJECT CARDS ─── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  perspective: 1200px;
+}
+
+.project-card {
+  position: relative;
+  background: var(--smoke);
+  border: 1px solid rgba(74, 74, 90, 0.25);
+  padding: 48px;
+  overflow: hidden;
+  cursor: none;
+  transform-style: preserve-3d;
+  transition: border-color 0.4s;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,255,136,0.04), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.project-card:hover { border-color: rgba(0, 255, 136, 0.5); }
+.project-card:hover::before { opacity: 1; }
+
+.project-card .bracket { opacity: 0; transition: opacity 0.3s; }
+.project-card:hover .bracket { opacity: 1; }
+
+.project-card--primary {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 520px;
+}
+
+.project-card--secondary {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 520px;
+  margin-top: 80px;
+}
+
+.project-card--placeholder {
+  grid-column: 1 / -1;
+  min-height: 260px;
+  border-style: dashed;
+  border-color: rgba(74, 74, 90, 0.2);
+  opacity: 0.55;
+  cursor: default;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-card--placeholder:hover { border-color: rgba(74, 74, 90, 0.2); }
+.project-card--placeholder::before { display: none; }
+
+.project-card-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--static);
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+}
+
+.project-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  letter-spacing: -0.02em;
+  color: var(--ghost);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.project-card-desc {
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(232, 232, 240, 0.38);
+  max-width: 340px;
+  margin-bottom: 28px;
+}
+
+.project-card-readout {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 2.1;
+  color: rgba(232, 232, 240, 0.22);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s, transform 0.4s;
+  flex: 1;
+}
+
+.project-card:hover .project-card-readout {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card-readout .tag { color: var(--terminal); margin-right: 10px; }
+
+.project-card-visual {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 55%; height: 60%;
+  overflow: hidden;
+  opacity: 0.45;
+  transition: opacity 0.5s;
+}
+
+.project-card:hover .project-card-visual { opacity: 0.7; }
+
+.project-card-visual img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.4) brightness(0.5);
+  transition: filter 0.5s, transform 0.6s;
+}
+
+.project-card:hover .project-card-visual img {
+  filter: grayscale(0) brightness(0.7);
+  transform: scale(1.04);
+}
+
+.project-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terminal);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s 0.05s, transform 0.4s 0.05s;
+  position: relative;
+  z-index: 2;
+}
+
+.project-card:hover .project-card-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card-link-line {
+  width: 28px; height: 1px;
+  background: var(--terminal);
+  transition: width 0.3s;
+}
+
+.project-card-link:hover .project-card-link-line { width: 48px; }
+
+.project-card-link-head {
+  width: 6px; height: 6px;
+  border-right: 1px solid var(--terminal);
+  border-top: 1px solid var(--terminal);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* Placeholder card inner */
+.placeholder-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+  color: var(--static);
+  text-align: center;
+}
+
+.placeholder-inner .p-label {
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.placeholder-inner .p-icon {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(74, 74, 90, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  #work { padding: 80px 24px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card--primary { grid-column: 1; grid-row: 1; margin-top: 0; }
+  .project-card--secondary { grid-column: 1; grid-row: 2; margin-top: 0; }
+  .project-card--placeholder { grid-column: 1; }
+  .project-card { min-height: 380px; }
+}
+
+/* ─── CAPABILITIES ─── */
+#capabilities {
+  padding: 120px 60px;
+  border-top: 1px solid rgba(74, 74, 90, 0.2);
+}
+
+.capabilities-inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.capabilities-list {
+  list-style: none;
+  border-top: 1px solid rgba(74, 74, 90, 0.2);
+}
+
+.capabilities-list li {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(74, 74, 90, 0.2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(232, 232, 240, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: color 0.3s, padding-left 0.3s;
+  cursor: default;
+}
+
+.capabilities-list li::before {
+  content: '>';
+  color: var(--terminal);
+  font-size: 9px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.capabilities-list li:hover {
+  color: var(--ghost);
+  padding-left: 8px;
+}
+
+.capabilities-list li:hover::before { opacity: 1; }
+
+.capabilities-aside .section-label { margin-bottom: 20px; }
+
+.capabilities-aside p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 2.1;
+  color: rgba(232, 232, 240, 0.28);
+  max-width: 440px;
+}
+
+.capabilities-aside p strong { color: var(--terminal); font-weight: 500; }
+
+@media (max-width: 768px) {
+  #capabilities { padding: 80px 24px; }
+  .capabilities-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ─── CONTACT ─── */
+#contact {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 120px 60px;
+  position: relative;
+  border-top: 1px solid rgba(74, 74, 90, 0.2);
+}
+
+.contact-headline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 6rem);
+  letter-spacing: -0.03em;
+  color: var(--ghost);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  overflow: hidden;
+  line-height: 0.95;
+}
+
+.contact-headline-inner { display: block; }
+
+.contact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--void);
+  background: var(--terminal);
+  padding: 18px 40px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-cta:hover {
+  background: var(--ghost);
+  transform: translateY(-2px);
+}
+
+.cta-line {
+  width: 32px; height: 1px;
+  background: var(--void);
+  transition: width 0.3s;
+  position: relative;
+}
+
+.contact-cta:hover .cta-line { width: 52px; }
+
+.cta-line-head {
+  width: 8px; height: 8px;
+  border-right: 1px solid var(--void);
+  border-top: 1px solid var(--void);
+  transform: rotate(45deg);
+  position: absolute;
+  right: -1px; top: -4px;
+}
+
+.contact-note {
+  margin-top: 44px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--static);
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  #contact { padding: 80px 24px; min-height: 60vh; }
+}
+
+/* ─── MISSION CONTROL FOOTER ─── */
+#footer {
+  position: relative;
+  padding: 40px 60px;
+  border-top: 1px solid rgba(74, 74, 90, 0.2);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 32px;
+}
+
+.footer-hud {
+  position: relative;
+  padding: 16px 20px;
+}
+
+.footer-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 2.4;
+  color: rgba(232, 232, 240, 0.3);
+}
+
+.footer-status .sl { color: var(--static); margin-right: 8px; }
+.footer-status .sv { color: var(--terminal); }
+.footer-status .sv.amber { color: var(--amber); }
+
+.footer-center { text-align: center; }
+
+.footer-wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(232, 232, 240, 0.18);
+}
+
+.footer-right { text-align: right; }
+
+.footer-clock {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ghost);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.footer-clock-label {
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: var(--static);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: rgba(232, 232, 240, 0.12);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  #footer { grid-template-columns: 1fr; text-align: center; padding: 40px 24px; gap: 24px; }
+  .footer-hud { order: 2; }
+  .footer-center { order: 1; }
+  .footer-right { order: 0; text-align: center; }
+  .footer-copy { text-align: center; }
+}
+
+/* ─── CORNER DECORATIONS ─── */
+.corner-decor { position: fixed; pointer-events: none; z-index: 50; }
+.corner-decor--tl { top: 24px; left: 24px; }
+.corner-decor--br { bottom: 24px; right: 24px; }
+
+.corner-decor .v-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, rgba(0,255,136,0.15), transparent);
+}
+.corner-decor .h-line {
+  width: 36px; height: 1px;
+  background: linear-gradient(to right, rgba(0,255,136,0.15), transparent);
+}
+.corner-decor--br .v-line { background: linear-gradient(to top, rgba(0,255,136,0.15), transparent); }
+.corner-decor--br .h-line { background: linear-gradient(to left, rgba(0,255,136,0.15), transparent); }
+.corner-decor .corner-dot { width: 3px; height: 3px; background: rgba(0,255,136,0.35); margin-top: 4px; }
+.corner-decor--br .corner-dot { margin-top: 0; margin-bottom: 4px; }
+.corner-decor .corner-label {
+  font-family: var(--font-mono);
+  font-size: 7px; letter-spacing: 0.2em;
+  color: rgba(232,232,240,0.08);
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+.corner-decor--br .corner-label { text-align: right; }
+
+@media (max-width: 768px) { .corner-decor { display: none; } }
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal { opacity: 0; transform: translateY(24px); }
 </style>
 </head>
-<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<body>
 
-<!-- TopNavBar -->
-<nav class="bg-[#131313]/80 backdrop-blur-md border-b border-outline-variant/20 px-6 py-4 sticky top-0 z-50">
- <div class="max-w-screen-xl mx-auto flex justify-between items-center">
- <span class="font-headline font-black text-lg text-primary tracking-wider">SOLO VIBING</span>
- <div class="hidden md:flex items-center gap-6 font-label text-[10px] tracking-widest uppercase">
- <a class="text-[#bac9cc] hover:text-[#00E5FF] transition-colors duration-150" href="#work">WORK</a>
- <a class="text-[#bac9cc] hover:text-[#00E5FF] transition-colors duration-150" href="#manifesto">MANIFESTO</a>
- <a class="text-[#bac9cc] hover:text-[#00E5FF] transition-colors duration-150" href="#connect">CONNECT</a>
- </div>
- <button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-5 py-2 font-black tracking-widest text-xs hover:scale-105 transition-transform">
- CONNECT
- </button>
- </div>
-</nav>
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
 
-<main>
-
-<!-- Hero -->
-<section class="relative min-h-[85vh] flex flex-col items-center justify-center px-6 overflow-hidden">
-<!-- Background concentric circles -->
-<div class="absolute inset-0 z-0 opacity-15 pointer-events-none">
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-outline-variant/30 rounded-full"></div>
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-outline-variant/40 rounded-full"></div>
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-primary/20 rounded-full"></div>
+<!-- Boot Overlay -->
+<div id="boot-overlay">
+  <div id="boot-terminal">
+    <span class="line" id="bl0">SOLOVIBING SYSTEMS v2.6.0</span>
+    <span class="line" id="bl1">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+    <span class="line" id="bl2">&nbsp;</span>
+    <span class="line" id="bl3">> INITIALIZING SIGNAL...</span>
+    <span class="line" id="bl4">> LOADING STUDIO CONFIG...</span>
+    <span class="line" id="bl5">> CALIBRATING AESTHETICS...</span>
+    <span class="line" id="bl6">> UNPACKING CREATIVE ENGINE...</span>
+    <span class="line" id="bl7">&nbsp;</span>
+    <span class="line" id="bl8">STATUS: <span style="color:var(--terminal)">SIGNAL ACQUIRED</span></span>
+    <span class="line" id="bl9">&nbsp;</span>
+    <span class="boot-cursor" id="boot-cursor"></span>
+  </div>
 </div>
 
-<div class="relative z-10 text-center max-w-4xl mx-auto">
-<!-- Status badge -->
-<div class="mb-8 inline-flex items-center gap-2 px-3 py-1 border border-outline-variant/20 bg-surface-container-low">
-<span class="w-1.5 h-1.5 bg-primary-container animate-ping"></span>
-<span class="font-label text-[10px] tracking-[0.3em] uppercase text-on-surface-variant">System Online v2.0 // LOCAL_VIBE_SYNC</span>
+<!-- Glitch Flash -->
+<div id="glitch-flash"></div>
+
+<!-- Noise + Scanline -->
+<div id="noise"></div>
+<div id="scanline"></div>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Corner Decorations -->
+<div class="corner-decor corner-decor--tl">
+  <div class="v-line"></div>
+  <div class="h-line"></div>
+  <div class="corner-dot"></div>
+  <div class="corner-label">Solovibing // Est.2024</div>
+</div>
+<div class="corner-decor corner-decor--br">
+  <div class="corner-dot"></div>
+  <div class="h-line"></div>
+  <div class="v-line"></div>
+  <div class="corner-label">All systems nominal</div>
 </div>
 
-<h1 class="font-headline text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8 animate-pulse-slow">
- EXPLORING<br/><span class="text-transparent bg-clip-text bg-gradient-to-b from-primary to-primary-container/40">GAMIFICATION</span><br/>DESIGN WITH AI
- </h1>
-<p class="font-body text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 leading-relaxed">
- We strip away the noise to find the signal. An indie studio building high-performance digital artifacts for the next iteration of the web.
- </p>
-<div class="flex flex-col md:flex-row items-center justify-center gap-6">
-<a class="group relative px-10 py-4 bg-primary text-on-primary font-headline font-bold uppercase tracking-widest transition-all glow-hover overflow-hidden" href="#work">
-<span class="relative z-10">Explore Works</span>
-<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-</a>
-<a class="px-10 py-4 border border-outline-variant/30 text-primary font-headline font-bold uppercase tracking-widest hover:bg-surface-container-low transition-colors" href="#manifesto">
- The Manifesto
- </a>
-</div>
-</div>
+<!-- MAIN SITE -->
+<div id="site">
 
-<!-- Scroll Indicator -->
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
-<span class="font-label text-[10px] tracking-widest uppercase text-outline">Scroll Down</span>
-<div class="w-px h-16 bg-gradient-to-b from-primary to-transparent relative overflow-hidden">
-<div class="absolute top-0 left-0 w-full h-1/2 bg-white animate-bounce"></div>
-</div>
-</div>
-</section>
+  <!-- NAV -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo">Solovibing</a>
+    <ul class="nav-links">
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- Bento Grid -->
-<section class="py-32 px-12 max-w-screen-xl mx-auto" id="work">
-<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-<div class="max-w-xl">
-<div class="text-[10px] font-label tracking-[0.4em] text-outline-variant mb-4 uppercase">/ PROJECTS / ARCHIVE_01</div>
-<h2 class="font-headline text-4xl font-bold uppercase tracking-tighter mb-4 text-primary">Vibe-coded Apps</h2>
-<p class="text-on-surface-variant font-body">Our portfolio is a collection of mathematical certainties expressed through light and code.</p>
-</div>
-<div class="font-label text-[10px] tracking-widest uppercase text-outline pb-2 border-b border-outline-variant/20 flex items-center gap-3">
-<span class="animate-pulse text-primary">●</span> Category: Digital Artifacts
-</div>
-</div>
+  <!-- HERO -->
+  <section id="hero" aria-label="Hero">
+    <div class="bracket bracket-tl"></div>
+    <div class="bracket bracket-tr"></div>
+    <div class="bracket bracket-bl"></div>
+    <div class="bracket bracket-br"></div>
 
-<div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+    <div class="hero-eyebrow" id="hero-eyebrow">
+      <span>Signal from the edge</span>
+    </div>
 
-<!-- Large Card: News Claw -->
-<a href="https://news.solovibing.com" target="_blank" class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden group cursor-pointer border border-outline-variant/5 hover:border-primary/40 transition-all">
-<div class="relative z-10 h-full flex flex-col justify-between">
-<div>
-<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 001</span>
-<h3 class="font-headline text-3xl font-black mt-4 uppercase group-hover:tracking-wider transition-all duration-500">News Claw</h3>
-</div>
-<div class="mt-20">
-<p class="text-on-surface-variant max-w-md mb-6">A rogue-like card battler inspired news reader. Pick a category, click cards to read summaries, clear the deck.</p>
-<span class="flex items-center gap-2 text-primary font-label text-xs tracking-widest group-hover:gap-6 transition-all">
- READ THE NEWS <span class="material-symbols-outlined text-sm animate-pulse">arrow_forward</span>
-</span>
-</div>
-</div>
-<div class="absolute top-0 right-0 w-2/3 h-full opacity-30 group-hover:opacity-50 transition-all duration-700">
-<img class="w-full h-full object-contain object-right" src="news-claw-screenshot.jpg" alt="News Claw screenshot"/>
-</div>
-<div class="absolute top-4 left-4 w-1 h-1 bg-tertiary"></div>
-<div class="absolute bottom-4 right-4 w-1 h-1 bg-tertiary"></div>
-</a>
+    <h1 class="hero-title">
+      <span class="hero-title-line"><span class="hero-title-inner">Solo</span></span>
+      <span class="hero-title-line"><span class="hero-title-inner">vibing</span></span>
+    </h1>
 
-<!-- Small Card: Ho Yuen Bakery -->
-<div class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/40 transition-all">
-<div class="aspect-square bg-surface border border-outline-variant/20 mb-8 flex items-center justify-center p-8 relative overflow-hidden">
-<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
-<div class="w-full h-full" style="background-image: radial-gradient(circle at 2px 2px, #c3f5ff 1px, transparent 0); background-size: 24px 24px;"></div>
-</div>
-<div class="w-24 h-24 border-2 border-primary rotate-45 flex items-center justify-center group-hover:rotate-[135deg] transition-transform duration-1000">
-<div class="w-12 h-12 border border-primary/50 -rotate-12 group-hover:rotate-12 transition-transform duration-700"></div>
-</div>
-</div>
-<div>
-<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 002</span>
-<h3 class="font-headline text-xl font-black mt-2 uppercase">Ho Yuen Cafe</h3>
-<p class="text-on-surface-variant text-sm mt-4">HK-style bakery e-commerce. Pickup-only. Red and gold brand.</p>
-</div>
-</div>
+    <p class="hero-manifesto" id="hero-manifesto">
+      A creative studio building <em>high-end digital artifacts</em>.<br/>
+      We ship things that feel alive — precise, confident, slightly unknown.
+    </p>
 
-<!-- Small Card: Solo Vibing -->
-<div class="md:col-span-4 bg-surface-container-low p-10 flex flex-col justify-between group cursor-pointer border border-outline-variant/5 hover:border-primary/40 transition-all">
-<div class="aspect-square bg-surface border border-outline-variant/20 mb-8 flex items-center justify-center p-8 relative overflow-hidden">
-<div class="w-full h-px bg-primary/30 absolute top-1/2 group-hover:w-0 transition-all duration-500"></div>
-<div class="w-px h-full bg-primary/30 absolute left-1/2 group-hover:h-0 transition-all duration-500"></div>
-<div class="w-16 h-16 bg-primary-container relative z-10 group-hover:rotate-90 transition-transform duration-500"></div>
-</div>
-<div>
-<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 003</span>
-<h3 class="font-headline text-xl font-black mt-2 uppercase">Solo Vibing</h3>
-<p class="text-on-surface-variant text-sm mt-4">This site. Building the brand, one project at a time.</p>
-</div>
-</div>
+    <div class="hero-scroll-hint" id="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
 
-<!-- Medium Card: More coming -->
-<div class="md:col-span-8 bg-surface-container-low p-12 relative overflow-hidden group border border-outline-variant/5 hover:border-primary/40 transition-all">
-<div class="flex flex-col md:flex-row gap-12 items-center h-full">
-<div class="w-full md:w-1/2 overflow-hidden">
-<img class="grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="More coming soon"/>
-</div>
-<div class="w-full md:w-1/2">
-<span class="text-primary font-label text-[10px] tracking-[0.3em] uppercase">Project 004</span>
-<h3 class="font-headline text-3xl font-black mt-4 uppercase">More coming</h3>
-<p class="text-on-surface-variant mt-6 mb-8">New projects in the works. Gamification, AI, and the spaces between.</p>
-<span class="material-symbols-outlined text-primary text-3xl group-hover:rotate-45 transition-transform duration-300">hourglass_empty</span>
-</div>
-</div>
-</div>
+  <!-- STUDIO -->
+  <section id="studio" aria-label="Studio">
+    <div class="studio-left">
+      <div class="section-label">/ Studio</div>
+      <h2 class="studio-title">What we are</h2>
+      <p class="studio-text">
+        A signal from the edge of creative possibility. We build things that most studios can't — or won't. Products, experiences, and systems with genuine technical depth and aesthetic nerve. No template energy. No corporate softening.
+      </p>
+    </div>
+    <div class="studio-right">
+      <div class="section-label">/ By the numbers</div>
+      <div class="studio-stats">
+        <div class="studio-stat-item">
+          <span class="studio-stat-num" data-target="2">0</span>
+          <span class="studio-stat-label">Projects shipped</span>
+        </div>
+        <div class="studio-stat-item">
+          <span class="studio-stat-num" data-target="0">0</span>
+          <span class="studio-stat-label">Compromises made</span>
+        </div>
+        <div class="studio-stat-item">
+          <span class="studio-stat-num">Q2<span style="font-size:1.6rem;color:var(--amber)">●</span></span>
+          <span class="studio-stat-label">Accepting projects</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</div>
-</section>
+  <!-- WORK -->
+  <section id="work" aria-label="Work">
+    <div class="section-header">
+      <div class="section-header-left">
+        <div class="section-label">/ Selected work</div>
+        <h2 class="section-title">What we've built</h2>
+      </div>
+      <div class="section-count">02 projects</div>
+    </div>
 
-<!-- Manifesto Section -->
-<section class="bg-surface-container-lowest py-40 border-y border-outline-variant/5 relative" id="manifesto">
-<div class="max-w-screen-xl mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-24 relative z-10">
-<div>
-<h2 class="font-headline text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8]">THE<br/><span class="text-primary hover:tracking-widest transition-all duration-1000 cursor-default">MANIFESTO</span></h2>
-<div class="mt-8 flex items-center gap-4 text-outline font-label text-[10px] tracking-[0.2em]">
-<span>REV_3.2</span>
-<span class="w-12 h-px bg-outline/20"></span>
-<span>EST_2024</span>
-</div>
-</div>
-<div class="space-y-12">
-<div class="group">
-<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase group-hover:text-primary transition-colors">01. Eliminate</h4>
-<p class="text-on-surface-variant text-xl leading-relaxed border-l-2 border-transparent group-hover:border-primary/30 pl-0 group-hover:pl-6 transition-all duration-500">If it doesn't add value, it subtracts clarity. We remove the clutter until only the essence remains. Rounded corners are for children; we prefer the sharp edge of intent.</p>
-</div>
-<div class="group">
-<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase group-hover:text-primary transition-colors">02. Illuminate</h4>
-<p class="text-on-surface-variant text-xl leading-relaxed border-l-2 border-transparent group-hover:border-primary/30 pl-0 group-hover:pl-6 transition-all duration-500">Contrast is our primary tool. We use light to guide focus and darkness to create depth. A well-designed interface should feel like a cockpit in a storm.</p>
-</div>
-<div class="group">
-<h4 class="font-headline text-xl font-bold text-primary-container mb-4 tracking-widest uppercase group-hover:text-primary transition-colors">03. Automate</h4>
-<p class="text-on-surface-variant text-xl leading-relaxed border-l-2 border-transparent group-hover:border-primary/30 pl-0 group-hover:pl-6 transition-all duration-500">Precision is mathematically driven. Human error is minimized through rigorous systems thinking and automated aesthetics.</p>
-</div>
-</div>
-</div>
-<!-- Subtle back-grid -->
-<div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-size: 100px 100px; background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px);"></div>
-</section>
+    <div class="projects-grid" id="projects-grid">
 
-<!-- Connect Section -->
-<section class="py-32 px-12 max-w-4xl mx-auto text-center" id="connect">
-<h2 class="font-headline text-4xl font-black uppercase tracking-tighter mb-4 text-primary">Get in Touch</h2>
-<p class="text-on-surface-variant mb-16">Ready to build something? Reach out below.</p>
-<form class="space-y-12 text-left" onsubmit="event.preventDefault(); this.innerHTML='<p class=\'text-primary font-headline text-xl py-8\'>Message sent. We\'ll be in touch.</p>'">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-<div class="relative group">
-<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2 group-focus-within:text-primary transition-colors">Name</label>
-<input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest" placeholder="YOUR_NAME" type="text" required/>
-<div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-focus-within:w-full transition-all duration-500"></div>
-</div>
-<div class="relative group">
-<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2 group-focus-within:text-primary transition-colors">Email</label>
-<input class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest" placeholder="YOUR@EMAIL" type="email" required/>
-<div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-focus-within:w-full transition-all duration-500"></div>
-</div>
-</div>
-<div class="relative group">
-<label class="block font-label text-[10px] tracking-[0.3em] uppercase text-outline mb-2 group-focus-within:text-primary transition-colors">Message</label>
-<textarea class="w-full bg-transparent border-b border-outline-variant py-4 focus:outline-none focus:border-primary text-on-surface transition-colors placeholder:text-outline-variant font-headline uppercase font-bold tracking-widest resize-none" placeholder="YOUR_MESSAGE" rows="4" required></textarea>
-<div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-focus-within:w-full transition-all duration-500"></div>
-</div>
-<div class="pt-8 flex justify-center">
-<button class="group px-16 py-5 bg-surface-container-high text-primary border border-primary/20 font-headline font-black uppercase tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all glow-hover" type="submit">
- Send Message
- </button>
-</div>
-</form>
-</section>
+      <!-- News Claw — Primary -->
+      <div class="project-card project-card--primary" data-card="primary">
+        <div class="bracket bracket-tl"></div>
+        <div class="bracket bracket-tr"></div>
+        <div class="bracket bracket-bl"></div>
+        <div class="bracket bracket-br"></div>
+        <div class="project-card-eyebrow">Project 001 // Gamification</div>
+        <h3 class="project-card-title">News Claw</h3>
+        <p class="project-card-desc">A roguelike card battler that reads the news. Pick a category, slay cards, clear the deck. Slay the Spire meets your morning briefing.</p>
+        <div class="project-card-readout">
+          <div><span class="tag">TYPE</span>Roguelike Card Battler</div>
+          <div><span class="tag">STACK</span>React, GSAP, NewsAPI</div>
+          <div><span class="tag">YEAR</span>2025</div>
+          <div><span class="tag">STATUS</span>Live // news.solovibing.com</div>
+        </div>
+        <a href="https://news.solovibing.com" target="_blank" rel="noopener" class="project-card-link">
+          <span class="project-card-linkline"></span>
+          <span class="project-card-link-head"></span>
+          View live
+        </a>
+        <div class="project-card-visual">
+          <img src="news-claw-screenshot.jpg" alt="News Claw screenshot" loading="lazy"/>
+        </div>
+      </div>
 
-</main>
+      <!-- Homebase — Secondary -->
+      <div class="project-card project-card--secondary" data-card="secondary">
+        <div class="bracket bracket-tl"></div>
+        <div class="bracket bracket-tr"></div>
+        <div class="bracket bracket-bl"></div>
+        <div class="bracket bracket-br"></div>
+        <div class="project-card-eyebrow">Project 002 // Platform</div>
+        <h3 class="project-card-title">Homebase</h3>
+        <p class="project-card-desc">A unified dashboard for managing creative projects. Real-time collaboration, asset management, and workflow automation for small studios.</p>
+        <div class="project-card-readout">
+          <div><span class="tag">TYPE</span>Productivity Platform</div>
+          <div><span class="tag">STACK</span>Next.js, Supabase, WebSockets</div>
+          <div><span class="tag">YEAR</span>2025</div>
+          <div><span class="tag">STATUS</span>In development</div>
+        </div>
+        <a href="#" class="project-card-link" onclick="return false;">
+          <span class="project-card-link-line"></span>
+          <span class="project-card-link-head"></span>
+          Coming soon
+        </a>
+        <div class="project-card-visual">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80" alt="Homebase dashboard preview" loading="lazy"/>
+        </div>
+      </div>
 
-<!-- Footer -->
-<footer class="bg-[#131313] w-full mt-20 border-t border-[#3b494c]/15">
-<div class="flex flex-col md:flex-row justify-between items-center px-12 py-10 w-full max-w-screen-2xl mx-auto gap-8">
-<div class="text-lg font-bold text-[#c3f5ff]">SOLO VIBING</div>
-<div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc] flex gap-8">
-<a class="hover:text-[#00E5FF] transition-colors" href="#work">WORK</a>
-<a class="hover:text-[#00E5FF] transition-colors" href="#manifesto">MANIFESTO</a>
-<a class="hover:text-[#00E5FF] transition-colors" href="#connect">CONTACT</a>
-</div>
-<div class="font-['Space_Grotesk'] text-[10px] tracking-widest uppercase text-[#bac9cc]/60">
- ©2024 SOLO VIBING. PRECISION OVER FLUFF.
- </div>
-</div>
+      <!-- More coming placeholder -->
+      <div class="project-card project-card--placeholder">
+        <div class="bracket bracket-tl"></div>
+        <div class="bracket bracket-tr"></div>
+        <div class="bracket bracket-bl"></div>
+        <div class="bracket bracket-br"></div>
+        <div class="placeholder-inner">
+          <div class="p-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="0" width="6" height="16" fill="currentColor" opacity="0.3"/>
+              <rect x="0" y="5" width="16" height="6" fill="currentColor" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="p-label">More coming</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities" aria-label="Capabilities">
+    <div class="capabilities-inner">
+      <div>
+        <div class="section-label">/ Capabilities</div>
+        <h2 class="section-title">What we do</h2>
+      </div>
+      <div class="capabilities-aside">
+        <ul class="capabilities-list">
+          <li>Product strategy & concept architecture</li>
+          <li>Frontend engineering (React, Next.js, GSAP)</li>
+          <li>Game mechanics & interaction design</li>
+          <li>AI/ML integration & tooling</li>
+          <li>Creative direction & visual systems</li>
+          <li>Performance-first web engineering</li>
+          <li>Real-time collaboration systems</li>
+          <li>Brand identity & digital presence</li>
+        </ul>
+        <p style="margin-top:28px;">
+          We operate at the intersection of <strong>engineering rigor</strong> and
+          <strong>creative ambition</strong>. Every project is treated as a craft object —
+          built to last, built to feel right, built to <strong>work perfectly</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-label="Contact">
+    <div class="bracket bracket-tl"></div>
+    <div class="bracket bracket-tr"></div>
+    <div class="bracket bracket-bl"></div>
+    <div class="bracket bracket-br"></div>
+
+    <h2 class="contact-headline" id="contact-headline">
+      <span class="contact-headline-inner">Start a</span>
+      <span class="contact-headline-inner">conversation.</span>
+    </h2>
+
+    <a href="mailto:signal@solovibing.com" class="contact-cta" id="contact-cta">
+      <span class="cta-line"><span class="cta-line-head"></span></span>
+      Send a signal
+    </a>
+
+    <p class="contact-note">signal@solovibing.com — Q2 2026 availability open</p>
+  </section>
+
+</div><!-- /#site -->
+
+<!-- MISSION CONTROL FOOTER -->
+<footer id="footer" role="contentinfo">
+  <div class="footer-hud">
+    <div class="bracket bracket-tl" style="opacity:0.3"></div>
+    <div class="bracket bracket-tr" style="opacity:0.3"></div>
+    <div class="bracket bracket-bl" style="opacity:0.3"></div>
+    <div class="bracket bracket-br" style="opacity:0.3"></div>
+    <div class="footer-status">
+      <div><span class="sl">STUDIO</span><span class="sv">SOLOVIBING</span></div>
+      <div><span class="sl">STATUS</span><span class="sv">ACCEPTING PROJECTS</span></div>
+      <div><span class="sl">SLOT</span><span class="sv amber">Q2 2026 OPEN</span></div>
+      <div><span class="sl">ENCRYPTION</span><span class="sv">AES-256</span></div>
+    </div>
+  </div>
+
+  <div class="footer-center">
+    <div class="footer-wordmark">Solovibing</div>
+  </div>
+
+  <div class="footer-right">
+    <div class="footer-clock" id="footer-clock">00:00:00</div>
+    <div class="footer-clock-label">UTC-07:00</div>
+    <div class="footer-copy">Precision over fluff. Always.</div>
+  </div>
 </footer>
 
-<!-- Geometric Accent Ornaments -->
-<div class="fixed top-24 left-6 hidden xl:block pointer-events-none">
-<div class="data-beam-v h-32 mb-4"></div>
-<div class="w-1.5 h-1.5 bg-primary animate-pulse"></div>
-<div class="font-label text-[7px] text-outline mt-4 tracking-widest opacity-40">UPLINK_ESTABLISHED</div>
-</div>
-<div class="fixed bottom-24 right-6 hidden xl:block pointer-events-none text-right">
-<div class="font-label text-[8px] text-outline-variant tracking-widest mb-4 [writing-mode:vertical-rl]">SOLO_VIBING_001</div>
-<div class="w-1.5 h-1.5 bg-tertiary ml-auto"></div>
-<div class="data-beam-v h-32 mt-4 ml-auto"></div>
-</div>
+<script>
+/* ═══════════════════════════════════════════════
+   BOOT SEQUENCE
+═══════════════════════════════════════════════ */
+(function() {
+  const bootLines = [
+    { id: 'bl0', delay: 0 },
+    { id: 'bl1', delay: 120 },
+    { id: 'bl2', delay: 200 },
+    { id: 'bl3', delay: 400 },
+    { id: 'bl4', delay: 700 },
+    { id: 'bl5', delay: 1000 },
+    { id: 'bl6', delay: 1300 },
+    { id: 'bl7', delay: 1600 },
+    { id: 'bl8', delay: 1900 },
+    { id: 'bl9', delay: 2100 },
+  ];
 
-<!-- Floating Status Ticker -->
-<div class="fixed bottom-6 left-12 z-[60] flex items-center gap-4 pointer-events-none">
-<div class="bg-surface-container-high/80 backdrop-blur px-3 py-1.5 border border-outline-variant/20 flex items-center gap-3">
-<div class="w-1 h-1 bg-primary rounded-full animate-ping"></div>
-<div class="font-label text-[8px] tracking-[0.2em] text-on-surface-variant overflow-hidden whitespace-nowrap">
-<span class="inline-block animate-marquee">
- System: ACTIVE // BANDWIDTH: OPTIMAL // ENCRYPTION: AES-256 // VIBE: SHARP //
- </span>
-</div>
-</div>
-</div>
+  let lineIndex = 0;
+
+  function showNextLine() {
+    if (lineIndex >= bootLines.length) {
+      // All lines shown — wait then trigger glitch + reveal
+      setTimeout(triggerGlitchAndReveal, 600);
+      return;
+    }
+    const item = bootLines[lineIndex];
+    const el = document.getElementById(item.id);
+    if (el) {
+      el.style.opacity = '1';
+      el.style.transition = 'opacity 0.15s';
+    }
+    lineIndex++;
+    setTimeout(showNextLine, lineIndex <= 3 ? 150 : 250);
+  }
+
+  function triggerGlitchAndReveal() {
+    // Hide cursor
+    const bc = document.getElementById('boot-cursor');
+    if (bc) bc.classList.add('gone');
+
+    // Flash glitch
+    const flash = document.getElementById('glitch-flash');
+    flash.style.transition = 'opacity 0.05s';
+    flash.style.opacity = '0.4';
+    setTimeout(function() {
+      flash.style.transition = 'opacity 0.2s';
+      flash.style.opacity = '0';
+    }, 80);
+
+    // Fade out boot overlay, reveal site
+    setTimeout(function() {
+      const overlay = document.getElementById('boot-overlay');
+      overlay.style.transition = 'opacity 0.5s ease';
+      overlay.style.opacity = '0';
+      setTimeout(function() {
+        overlay.style.display = 'none';
+        document.getElementById('site').style.opacity = '1';
+        initSiteAnimations();
+      }, 500);
+    }, 100);
+  }
+
+  // Start boot after brief pause
+  setTimeout(showNextLine, 400);
+})();
+
+/* ═══════════════════════════════════════════════
+   SITE ANIMATIONS (run after boot)
+═══════════════════════════════════════════════ */
+function initSiteAnimations() {
+  if (typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero title reveal
+  const titleInners = document.querySelectorAll('.hero-title-inner');
+  gsap.to(titleInners, {
+    y: '0%',
+    duration: 1.0,
+    ease: 'power4.out',
+    stagger: 0.12,
+    delay: 0.1
+  });
+
+  gsap.to('#hero-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.3 });
+  gsap.to('#hero-manifesto', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.6 });
+  gsap.to('#hero-scroll', { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 1.0 });
+
+  // Contact headline
+  const contactInners = document.querySelectorAll('.contact-headline-inner');
+  gsap.from(contactInners, {
+    y: '110%',
+    duration: 0.9,
+    ease: 'power4.out',
+    stagger: 0.1,
+    scrollTrigger: {
+      trigger: '#contact',
+      start: 'top 80%',
+    }
+  });
+
+  gsap.from('#contact-cta', {
+    opacity: 0,
+    y: 20,
+    duration: 0.7,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '#contact',
+      start: 'top 70%',
+    }
+  });
+
+  // Scroll progress
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    document.getElementById('scroll-progress').style.width = pct + '%';
+  }, { passive: true });
+
+  // Counter animations
+  document.querySelectorAll('.studio-stat-num[data-target]').forEach(function(el) {
+    const target = parseInt(el.getAttribute('data-target'), 10);
+    if (target === 0) return;
+    gsap.fromTo(el,
+      { innerText: 0 },
+      {
+        innerText: target,
+        duration: 1.5,
+        ease: 'power2.out',
+        snap: { innerText: 1 },
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+        }
+      }
+    );
+  });
+
+  // Section reveals
+  gsap.utils.toArray('.reveal').forEach(function(el) {
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+      }
+    });
+  });
+
+  // Spatial card interactions
+  initSpatialCards();
+
+  // Footer clock
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  const el = document.getElementById('footer-clock');
+  if (el) el.textContent = h + ':' + m + ':' + s;
+}
+
+/* ═══════════════════════════════════════════════
+   SPATIAL CARDS — cursor tracking tilt
+═══════════════════════════════════════════════ */
+function initSpatialCards() {
+  if (window.matchMedia('(max-width: 768px)').matches) return;
+
+  const cards = document.querySelectorAll('.project-card:not(.project-card--placeholder)');
+
+  cards.forEach(function(card) {
+    let enteredy = false;
+
+    card.addEventListener('mouseenter', function() {
+      enteredy = true;
+    });
+
+    card.addEventListener('mouseleave', function() {
+      enteredy = false;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        translateZ: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+    });
+
+    card.addEventListener('mousemove', function(e) {
+      if (!enteredy) return;
+
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);   // -1 to 1
+      const dy = (e.clientY - cy) / (rect.height / 2);  // -1 to 1
+
+      const rotateY = dx * 5;   // ±5 degrees max
+      const rotateX = -dy * 4;  // ±4 degrees max
+      const translateZ = Math.min(Math.abs(dx) + Math.abs(dy), 1) * 20; // up to 20px
+
+      gsap.to(card, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        translateZ: translateZ,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════ */
+(function() {
+  if (window.matchMedia('(max-width: 768px)').matches) return;
+
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+
+  if (!cursor || !ring) return;
+
+  let mx = window.innerWidth / 2;
+  let my = window.innerHeight / 2;
+  let rx = mx;
+  let ry = my;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX;
+    my = e.clientY;
+    gsap.to(cursor, { x: mx, y: my, duration: 0.05, ease: 'none' });
+  }, { passive: true });
+
+  // Ring follows with lag
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Hover states on interactive elements
+  const hoverTargets = document.querySelectorAll(
+    'a, button, .project-card, .capabilities-list li'
+  );
+
+  hoverTargets.forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      cursor.classList.add('hovering');
+      ring.classList.add('hovering');
+    });
+    el.addEventListener('mouseleave', function() {
+      cursor.classList.remove('hovering');
+      ring.classList.remove('hovering');
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════════════
+   TEXT SCRAMBLE (on project card titles hover)
+═══════════════════════════════════════════════ */
+(function() {
+  const cards = document.querySelectorAll('.project-card:not(.project-card--placeholder)');
+
+  cards.forEach(function(card) {
+    const title = card.querySelector('.project-card-title');
+    if (!title) return;
+
+    const original = title.textContent;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&';
+
+    card.addEventListener('mouseenter', function() {
+      let iterations = 0;
+      const interval = setInterval(function() {
+        title.textContent = original.split('').map(function(char, i) {
+          if (i < iterations) return original[i];
+          if (char === ' ') return ' ';
+          return chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        if (iterations >= original.length) clearInterval(interval);
+        iterations += 1;
+      }, 30);
+    });
+
+    card.addEventListener('mouseleave', function() {
+      title.textContent = original;
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
