@@ -1483,6 +1483,7 @@ function initParticles(){
       var obj = intersects[0].object;
       while (obj.parent && obj.userData.spherePos === undefined) obj = obj.parent;
       if (obj.userData.spherePos) {
+        wrap.onclick = null;
         openModal(obj.userData.label);
       }
     }
