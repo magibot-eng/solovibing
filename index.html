@@ -1481,6 +1481,9 @@ function initParticles(){
 
   function onCanvasClick(e) {
     if (isDragging) return;
+    var crect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((e.clientX - crect.left) / crect.width) * 2 - 1;
+    mouse.y = -((e.clientY - crect.top) / crect.height) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     var intersects = raycaster.intersectObjects(cardMeshes, true);
     if (intersects.length > 0) {
