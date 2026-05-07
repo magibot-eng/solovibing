@@ -679,17 +679,17 @@ function initConstellation(){
 
   /* Nodes */
   var nodes=[
-    {id:'news-claw',name:'NEWS CLAW',desc:'> studio experiment: rogue-like news',year:'2025',size:isMobile?50:72,baseSize:isMobile?50:72,
+    {id:'news-claw',label:'Project 01',name:'NEWS CLAW',desc:'> studio experiment: rogue-like news',year:'2025',size:isMobile?50:72,baseSize:isMobile?50:72,
      x:0.28,y:0.40,color:'#00FF88',glow:'rgba(0,255,136,',brightness:1.0,link:'https://news.solovibing.com'},
-    {id:'homebase',name:'HOMEBASE',desc:'> premium guest welcome for hosts',year:'2025',size:isMobile?36:52,baseSize:isMobile?36:52,
+    {id:'homebase',label:'Project 02',name:'HOMEBASE',desc:'> premium guest welcome for hosts',year:'2025',size:isMobile?36:52,baseSize:isMobile?36:52,
      x:0.72,y:0.58,color:'#00DDAA',glow:'rgba(0,221,170,',brightness:0.72,link:'https://homebase.rest'},
-    {id:'p03',name:'PROJECT 03',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
+    {id:'p03',label:'Project 03',name:'PROJECT 03',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
      x:0.50,y:0.25,color:'#4A4A5A',glow:'rgba(74,74,90,',brightness:0.35,link:'#'},
-    {id:'p04',name:'PROJECT 04',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
+    {id:'p04',label:'Project 04',name:'PROJECT 04',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
      x:0.20,y:0.65,color:'#4A4A5A',glow:'rgba(74,74,90,',brightness:0.35,link:'#'},
-    {id:'p05',name:'PROJECT 05',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
+    {id:'p05',label:'Project 05',name:'PROJECT 05',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
      x:0.80,y:0.30,color:'#4A4A5A',glow:'rgba(74,74,90,',brightness:0.35,link:'#'},
-    {id:'p06',name:'PROJECT 06',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
+    {id:'p06',label:'Project 06',name:'PROJECT 06',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
      x:0.60,y:0.72,color:'#4A4A5A',glow:'rgba(74,74,90,',brightness:0.35,link:'#'}
   ];
 
@@ -849,7 +849,10 @@ function initConstellation(){
     /* Node click */
     wrap.style.cursor=hoveredNode?'pointer':'default';
     if(hoveredNode&&!reducedMotion&&!window.__skipWrapClick){
-      wrap.onclick=function(){if(hoveredNode.link&&hoveredNode.link!=='#')window.open(hoveredNode.link,'_blank');};
+      wrap.onclick=function(){
+        var label=hoveredNode.label||hoveredNode.name;
+        if(label)openModal(label);
+      };
     }
 
     if(!reducedMotion)requestAnimationFrame(draw);
@@ -1483,15 +1486,8 @@ function initParticles(){
       var obj = intersects[0].object;
       while (obj.parent && obj.userData.spherePos === undefined) obj = obj.parent;
       if (obj.userData.spherePos) {
-        var label = obj.userData.label;
-        var data = PROJECT_DATA[label];
-        if (data && data.link && data.link !== '#') {
-          window.__skipWrapClick = true;
-          window.open(data.link, '_blank');
-        } else {
-          window.__skipWrapClick = true;
-          openModal(label);
-        }
+        window.__skipWrapClick = true;
+        openModal(obj.userData.label);
       }
     }
   }
