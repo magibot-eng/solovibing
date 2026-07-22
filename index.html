@@ -86,21 +86,41 @@ body{background:var(--void);color:var(--ghost);font-family:var(--font-mono);-web
 @media(max-width:768px){#studio{grid-template-columns:1fr}.studio-left{padding:60px 24px;border-right:none;border-bottom:1px solid rgba(74,74,90,0.2)}.studio-right{padding:60px 24px}}
 
 #work{padding:120px 60px;position:relative}
-.constellation-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
+.work-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;gap:24px}
 .section-title{font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,3.5vw,3.2rem);letter-spacing:-0.02em;color:var(--ghost);text-transform:uppercase;margin-bottom:8px}
 .section-count{font-size:9px;letter-spacing:0.2em;color:var(--static);text-transform:uppercase;font-family:var(--font-mono)}
-.universe-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--terminal);font-variant-numeric:tabular-nums;margin-bottom:8px;opacity:0;transform:translateY(8px);transition:opacity 0.5s ease,transform 0.5s ease}
+.universe-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--terminal);font-variant-numeric:tabular-nums;margin-bottom:20px;opacity:0;transform:translateY(8px);transition:opacity 0.5s ease,transform 0.5s ease}
 .universe-label.visible{opacity:1;transform:translateY(0)}
-#constellation-wrap{position:relative;width:100%;height:580px;border:1px solid rgba(74,74,90,0.2);background:rgba(10,10,15,0.6);overflow:hidden}
-#constellation-canvas{width:100%;height:100%;display:block}
-#node-tooltip{position:absolute;pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity 0.3s ease,transform 0.3s ease;z-index:20;border-left:1px solid var(--terminal);padding-left:16px;max-width:280px}
-#node-tooltip.visible{opacity:1;transform:translateY(0)}
-.node-tooltip-name{font-family:var(--font-display);font-weight:700;font-size:1.4rem;color:var(--ghost);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
-.node-tooltip-desc{font-family:var(--font-mono);font-size:10px;color:var(--terminal);letter-spacing:0.1em;line-height:1.8;opacity:0.85}
-.node-tooltip-year{font-family:var(--font-mono);font-size:9px;color:rgba(232,232,240,0.3);letter-spacing:0.2em;text-transform:uppercase;margin-top:4px}
-.constellation-expanding{margin-top:32px;display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--static)}
+
+.work-gallery-wrap{position:relative;width:100%;padding:32px 0;border-top:1px solid rgba(74,74,90,0.2);border-bottom:1px solid rgba(74,74,90,0.2);background:rgba(10,10,15,0.45);overflow:hidden}
+.work-gallery{display:flex;gap:28px;overflow-x:auto;overflow-y:hidden;padding:48px 60px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--terminal) transparent;cursor:grab;user-select:none}
+.work-gallery:active{cursor:grabbing}
+.work-gallery::-webkit-scrollbar{height:4px}
+.work-gallery::-webkit-scrollbar-track{background:transparent}
+.work-gallery::-webkit-scrollbar-thumb{background:var(--static);border-radius:2px}
+@media(max-width:900px){#work{padding:80px 24px}.work-gallery{padding:32px 24px;gap:18px}}
+
+.work-card{position:relative;flex:0 0 360px;height:320px;background:rgba(20,20,28,0.85);border:1px solid rgba(74,74,90,0.35);padding:0;display:flex;flex-direction:column;align-items:stretch;text-align:left;color:var(--ghost);font-family:inherit;cursor:pointer;scroll-snap-align:start;transition:transform 0.4s cubic-bezier(0.2,0.8,0.2,1),border-color 0.3s,box-shadow 0.3s,background 0.3s;overflow:hidden;outline:none;-webkit-tap-highlight-color:transparent}
+@media(max-width:900px){.work-card{flex:0 0 78vw;height:280px}}
+.work-card::before{content:'';position:absolute;inset:0;border:1px solid transparent;pointer-events:none;transition:border-color 0.3s,box-shadow 0.3s;z-index:3}
+.work-card:hover,.work-card:focus-visible{transform:translateY(-6px) scale(1.015);background:rgba(20,20,28,1);border-color:var(--card-accent,var(--terminal));box-shadow:0 14px 36px rgba(0,0,0,0.55),0 0 0 1px var(--card-accent,var(--terminal)),0 0 32px -8px var(--card-accent,var(--terminal))}
+.work-card:hover::before,.work-card:focus-visible::before{border-color:var(--card-accent,var(--terminal))}
+.work-card-meta{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(232,232,240,0.55);z-index:2;mix-blend-mode:difference}
+.work-card-num{color:var(--ghost);font-variant-numeric:tabular-nums}
+.work-card-tag{color:var(--card-accent,var(--terminal))}
+.work-card-img{position:absolute;inset:0;display:block;overflow:hidden;background:#050507;z-index:1}
+.work-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s cubic-bezier(0.2,0.8,0.2,1),filter 0.4s ease;filter:brightness(0.85) saturate(0.85)}
+.work-card:hover .work-card-img img{transform:scale(1.05);filter:brightness(1) saturate(1)}
+.work-card-label{position:relative;z-index:2;margin:auto 0 0;padding:14px 18px 16px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(transparent,rgba(10,10,15,0.92) 35%,rgba(10,10,15,0.98));font-family:var(--font-display);font-weight:600;font-size:0.95rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--ghost)}
+.work-card-desc{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;color:var(--terminal);text-transform:none;font-weight:400}
+.work-card--placeholder{opacity:0.55}
+.work-card--placeholder .work-card-img img{filter:grayscale(0.9) brightness(0.6) saturate(0.5)}
+.work-card--placeholder:hover{opacity:1}
+.work-card--placeholder .work-card-label{color:rgba(232,232,240,0.55)}
+.work-card--placeholder .work-card-desc{color:var(--static)}
+
+.work-expanding{margin-top:24px;display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--static)}
 .expanding-cursor{display:inline-block;width:6px;height:10px;background:var(--static);animation:blink 0.8s step-end infinite}
-@media(max-width:900px){#work{padding:80px 24px}#constellation-wrap{height:420px}}
 
 @keyframes glitch-slice{0%{transform:translateX(-2px);color:var(--amber)}25%{transform:translateX(2px);color:var(--violet)}50%{transform:translateX(-1px);color:var(--amber)}75%{transform:translateX(1px);color:var(--violet)}100%{transform:translateX(0);color:inherit}}
 .glitch-hover{position:relative;display:inline-block;transition:transform 0.05s}
@@ -167,172 +187,73 @@ body{background:var(--void);color:var(--ghost);font-family:var(--font-mono);-web
 .corner-decor--br .corner-label{text-align:right}
 @media(max-width:768px){.corner-decor{display:none}}
 
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}#particle-canvas{display:none!important}.particle-fallback{display:block!important}#constellation-canvas{display:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}#particle-canvas{display:none!important}.particle-fallback{display:block!important}}
 
-/* Lumiere sphere styles */
-#canvas-container {
-  width: 100%;
-  height: 600px;
-  position: relative;
-  border: 1px solid rgba(74,74,90,0.2);
-  background: rgba(10,10,15,0.6);
-}
-#canvas-container canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
+/* Work overlay — Hirotos-inspired full-viewport detail view */
+.work-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;background:var(--void);opacity:0;pointer-events:none;transition:opacity 0.45s ease}
+.work-overlay.open{opacity:1;pointer-events:auto}
+.work-overlay-bg{position:absolute;inset:0;background:radial-gradient(120% 80% at 30% 10%,rgba(0,255,136,0.05),transparent 60%),linear-gradient(180deg,#07070B 0%,#0A0A0F 60%);z-index:0}
+.work-overlay-bg::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.05) 2px,rgba(0,0,0,0.05) 4px);pointer-events:none;mix-blend-mode:multiply;opacity:0.5}
+.work-overlay-header{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:24px 40px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--static)}
+.work-overlay-close{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid rgba(74,74,90,0.4);color:var(--ghost);font-family:inherit;font-size:10px;letter-spacing:0.3em;padding:10px 16px;text-transform:uppercase;cursor:pointer;transition:border-color 0.25s,color 0.25s}
+.work-overlay-close:hover{border-color:var(--terminal);color:var(--terminal)}
+.work-overlay-counter{color:rgba(232,232,240,0.45);font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:8px}
+.work-overlay-counter .counter-num{color:var(--terminal)}
+.work-overlay-nav{display:inline-flex;gap:6px}
+.work-overlay-nav button{background:transparent;border:1px solid rgba(74,74,90,0.4);color:var(--ghost);width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;font-family:inherit;transition:border-color 0.25s,color 0.25s}
+.work-overlay-nav button:hover,.work-overlay-nav button:focus-visible{border-color:var(--terminal);color:var(--terminal)}
 
-/* Modal */
-#modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-#modal.open {
-  opacity: 1;
-  pointer-events: all;
-}
-.modal-card {
-  background: rgba(20, 20, 25, 0.85);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px;
-  padding: 28px 32px;
-  text-align: center;
-  max-width: 500px;
-  width: 90%;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(255,255,255,0.04);
-  position: relative;
-}
-@media (max-width: 600px) {
-  .modal-card {
-    max-width: 360px;
-    padding: 28px 24px;
-  }
-}
-.modal-card h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: 0.02em;
-  color: var(--ghost);
-}
-.modal-card p {
-  font-size: 0.875rem;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 28px;
-}
-.modal-btn {
-  display: inline-block;
-  padding: 12px 36px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 100px;
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-.modal-btn:hover {
-  background: rgba(255,255,255,0.18);
-  border-color: rgba(255,255,255,0.35);
-  box-shadow: 0 0 20px rgba(255,255,255,0.1);
-}
-.modal-close {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.4);
-  font-size: 1.4rem;
-  cursor: pointer;
-  line-height: 1;
-  padding: 4px;
-  transition: color 0.2s;
-}
-.modal-close:hover { color: #fff; }
-#modal-screenshot-wrap {
-  width: 100%;
-  max-height: 280px;
-  overflow: hidden;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  background: #0a0a12;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#modal-screenshot-wrap.hidden { display: none; }
-#modal-screenshot {
-  width: auto;
-  max-width: 100%;
-  max-height: 280px;
-  object-fit: contain;
-  display: block;
-}
+.work-overlay-body{position:relative;z-index:1;flex:1;display:grid;grid-template-columns:minmax(320px,1fr) minmax(0,2.2fr);gap:60px;padding:60px 80px;min-height:0;overflow:auto}
+@media(max-width:960px){.work-overlay-body{grid-template-columns:1fr;gap:32px;padding:32px 24px;overflow:auto}}
+.work-overlay-left{position:relative;display:flex;flex-direction:column;justify-content:flex-start;padding-top:12px}
+.work-overlay-left .corner-frame{position:absolute;width:14px;height:14px;pointer-events:none;border-color:var(--terminal);opacity:0.7}
+.work-overlay-left .corner-frame--tl{top:-12px;left:-12px;border-top:1px solid;border-left:1px solid}
+.work-overlay-left .corner-frame--tr{top:-12px;right:auto;left:calc(100% - -4px);border-top:1px solid;border-right:1px solid}
+.work-overlay-left .corner-frame--bl{bottom:-12px;left:-12px;border-bottom:1px solid;border-left:1px solid}
+.work-overlay-left .corner-frame--br{bottom:-12px;right:auto;left:calc(100% - -4px);border-bottom:1px solid;border-right:1px solid}
+.overlay-num{font-family:var(--font-mono);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--terminal);margin-bottom:28px}
+.overlay-title{font-family:var(--font-display);font-weight:700;font-size:clamp(2.4rem,5vw,4.4rem);letter-spacing:-0.03em;line-height:0.95;text-transform:uppercase;color:var(--ghost);margin-bottom:24px}
+.work-overlay.is-placeholder .overlay-title{white-space:nowrap}
+.overlay-year{font-family:var(--font-mono);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(232,232,240,0.45);margin-bottom:32px}
+.overlay-desc{font-family:var(--font-mono);font-size:13px;line-height:1.9;color:rgba(232,232,240,0.6);max-width:480px;margin-bottom:40px}
+.overlay-tags{display:grid;grid-template-columns:auto 1fr;gap:14px 20px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding-top:24px;border-top:1px solid rgba(74,74,90,0.25);max-width:380px;margin-bottom:36px}
+.overlay-tags dt{color:var(--static)}
+.overlay-tags dd{color:var(--ghost);margin:0}
+.overlay-cta{display:inline-flex;align-items:center;gap:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--void);background:var(--terminal);padding:16px 28px;text-decoration:none;transition:background 0.25s,transform 0.2s;border:1px solid var(--terminal);align-self:flex-start}
+.overlay-cta:hover{background:transparent;color:var(--terminal);transform:translateY(-2px)}
+.overlay-cta.is-disabled{background:transparent;color:var(--static);border-color:rgba(74,74,90,0.4);cursor:default;pointer-events:none}
+.overlay-cta-arrow{display:inline-block;width:18px;height:1px;background:currentColor;position:relative}
+.overlay-cta-arrow::after{content:'';position:absolute;right:-1px;top:-3px;width:7px;height:7px;border-right:1px solid currentColor;border-top:1px solid currentColor;transform:rotate(45deg)}
 
-/* Mobile horizontal scroll fallback */
-#mobile-scroll {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 140px;
-  padding: 16px 20px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  gap: 14px;
-  align-items: center;
-  z-index: 10;
-  background: linear-gradient(transparent, rgba(0,0,0,0.6));
-  -webkit-overflow-scrolling: touch;
-}
-@media (max-width: 768px), (hover: none) {
-  #mobile-scroll { display: none !important; }
-}
-.mobile-card {
-  flex: 0 0 90px;
-  height: 110px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(20,20,25,0.8);
-  border: 1px solid rgba(255,255,255,0.1);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-}
-.mobile-card:hover, .mobile-card:active {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
-.mobile-card img {
-  width: 100%;
-  height: 80px;
-  object-fit: cover;
-  display: block;
-}
-.mobile-card span {
-  display: block;
-  text-align: center;
-  font-size: 0.6rem;
-  color: rgba(255,255,255,0.7);
-  padding: 4px 2px;
-  letter-spacing: 0.05em;
+.work-overlay-right{position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+.overlay-hero{position:relative;width:100%;max-width:880px;aspect-ratio:16/10;border:1px solid rgba(74,74,90,0.35);background:#050507;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(0,255,136,0.06)}
+.overlay-hero-img{width:100%;height:100%;object-fit:cover;display:block}
+.overlay-hero-img[hidden]{display:none}
+.overlay-hero-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;height:100%;font-family:var(--font-mono);font-size:11px;letter-spacing:0.4em;text-transform:uppercase;color:var(--static);background:repeating-linear-gradient(45deg,#07070B,#07070B 12px,#0A0A0F 12px,#0A0A0F 24px);z-index:1;pointer-events:none}
+.overlay-hero-placeholder[hidden]{display:none}
+.overlay-hero-placeholder span:last-child{color:var(--terminal);font-size:13px;letter-spacing:0.3em}
+.overlay-hero .corner-frame{position:absolute;width:16px;height:16px;pointer-events:none;opacity:0.8}
+.overlay-hero .corner-frame--tl{top:12px;left:12px;border-top:1px solid var(--terminal);border-left:1px solid var(--terminal)}
+.overlay-hero .corner-frame--tr{top:12px;right:12px;border-top:1px solid var(--terminal);border-right:1px solid var(--terminal)}
+.overlay-hero .corner-frame--bl{bottom:12px;left:12px;border-bottom:1px solid var(--terminal);border-left:1px solid var(--terminal)}
+.overlay-hero .corner-frame--br{bottom:12px;right:12px;border-bottom:1px solid var(--terminal);border-right:1px solid var(--terminal)}
+
+.work-overlay-footer{position:relative;z-index:2;padding:18px 40px 28px;border-top:1px solid rgba(74,74,90,0.25);background:rgba(7,7,11,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.overlay-strip{display:flex;gap:10px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--terminal) transparent;padding:2px 0}
+.overlay-strip::-webkit-scrollbar{height:3px}
+.overlay-strip::-webkit-scrollbar-thumb{background:var(--static)}
+.overlay-strip-item{flex:0 0 96px;height:60px;border:1px solid rgba(74,74,90,0.4);background:#050507;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;overflow:hidden;position:relative;transition:border-color 0.2s,opacity 0.2s}
+.overlay-strip-item img{width:100%;height:100%;object-fit:cover;display:block;opacity:0.6;transition:opacity 0.25s}
+.overlay-strip-item.is-active{border-color:var(--terminal);box-shadow:0 0 0 1px var(--terminal)}
+.overlay-strip-item.is-active img{opacity:1}
+.overlay-strip-item:hover img{opacity:0.95}
+.overlay-strip-item.is-placeholder img{filter:grayscale(0.8) brightness(0.5);opacity:0.4}
+
+@media(max-width:760px){
+  .work-overlay-header{padding:16px 20px}
+  .work-overlay-body{padding:24px 20px;gap:24px}
+  .overlay-hero{aspect-ratio:4/3}
+  .work-overlay-footer{padding:14px 20px 18px}
 }
 </style>
 </head>
@@ -407,18 +328,73 @@ body{background:var(--void);color:var(--ghost);font-family:var(--font-mono);-web
   </section>
 
   <section id="work" aria-label="Work">
-    <div class="constellation-header">
+    <div class="work-header">
       <div>
         <div class="section-label">/ Selected work</div>
         <h2 class="section-title glitch-entry" data-text="What we've built">What we've built</h2>
       </div>
       <div class="section-count">06 projects</div>
     </div>
-    <div class="universe-label" id="universe-label">THE UNIVERSE SO FAR</div>
-    <div id="canvas-container"></div>
-    <div class="constellation-expanding">
+    <div class="universe-label" id="universe-label">INTERACTIVE PROJECTS · DRAG TO SCROLL · CLICK TO OPEN</div>
+    <div class="work-gallery-wrap">
+      <div class="bracket bracket-tl"></div>
+      <div class="bracket bracket-tr"></div>
+      <div class="bracket bracket-bl"></div>
+      <div class="bracket bracket-br"></div>
+      <div class="work-gallery" id="work-gallery">
+        <button class="work-card" type="button" data-project="news-claw" style="--card-accent:#00FF88">
+          <span class="work-card-meta">
+            <span class="work-card-num">01</span>
+            <span class="work-card-tag">2025</span>
+          </span>
+          <span class="work-card-img"><img src="screenshots/news-claw-screenshot.jpg" alt="News Claw" loading="lazy"></span>
+          <span class="work-card-label">News Claw<span class="work-card-desc">studio experiment: rogue-like news</span></span>
+        </button>
+        <button class="work-card" type="button" data-project="homebase" style="--card-accent:#00DDAA">
+          <span class="work-card-meta">
+            <span class="work-card-num">02</span>
+            <span class="work-card-tag">2025</span>
+          </span>
+          <span class="work-card-img"><img src="screenshots/homebase-guesthub-screenshot.jpg" alt="Homebase" loading="lazy"></span>
+          <span class="work-card-label">Homebase<span class="work-card-desc">premium guest welcome for hosts</span></span>
+        </button>
+        <button class="work-card" type="button" data-project="start-five" style="--card-accent:#FF6B35">
+          <span class="work-card-meta">
+            <span class="work-card-num">03</span>
+            <span class="work-card-tag">2026</span>
+          </span>
+          <span class="work-card-img"><img src="screenshots/start-five-screenshot.jpg" alt="Start Five" loading="lazy"></span>
+          <span class="work-card-label">Start Five<span class="work-card-desc">reddit-native fantasy basketball draft</span></span>
+        </button>
+        <button class="work-card" type="button" data-project="timeblock-town" style="--card-accent:#A78BFA">
+          <span class="work-card-meta">
+            <span class="work-card-num">04</span>
+            <span class="work-card-tag">2026</span>
+          </span>
+          <span class="work-card-img"><img src="screenshots/timeblock-town-screenshot.jpg" alt="Timeblock Town" loading="lazy"></span>
+          <span class="work-card-label">Timeblock Town<span class="work-card-desc">google calendar focus blocks</span></span>
+        </button>
+        <button class="work-card work-card--placeholder" type="button" data-project="p05">
+          <span class="work-card-meta">
+            <span class="work-card-num">05</span>
+            <span class="work-card-tag">TBD</span>
+          </span>
+          <span class="work-card-img"><img src="screenshots/placeholder-coming-soon.jpg" alt="Project 05 — coming soon" loading="lazy"></span>
+          <span class="work-card-label">Project 05<span class="work-card-desc">coming soon</span></span>
+        </button>
+        <button class="work-card work-card--placeholder" type="button" data-project="p06">
+          <span class="work-card-meta">
+            <span class="work-card-num">06</span>
+            <span class="work-card-tag">TBD</span>
+          </span>
+          <span class="work-card-img"><img src="screenshots/placeholder-coming-soon.jpg" alt="Project 06 — coming soon" loading="lazy"></span>
+          <span class="work-card-label">Project 06<span class="work-card-desc">coming soon</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="work-expanding">
       <span class="expanding-cursor"></span>
-      <span>DRAG TO ROTATE · SCROLL TO ZOOM</span>
+      <span>DRAG OR SCROLL HORIZONTALLY · CLICK A CARD TO OPEN</span>
     </div>
   </section>
 
@@ -563,9 +539,6 @@ function initSite(){
   // Ambient jitter
   setupAmbientJitter();
 
-  // Init constellation
-  initConstellation();
-
   // Init particles
   initParticles();
 
@@ -654,226 +627,6 @@ function initCursor(){
     if(title.textContent.trim()!==original)title.textContent=original;
   });
 })();
-
-/* CONSTELLATION CANVAS */
-function initConstellation(){
-  var canvas=document.getElementById('constellation-canvas');
-  if(!canvas)return;
-  var wrap=document.getElementById('constellation-wrap');
-  var ctx=canvas.getContext('2d');
-  var dpr=Math.min(window.devicePixelRatio||1,2);
-  var W,H;
-
-  var reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isMobile=window.matchMedia('(max-width: 768px)').matches||navigator.maxTouchPoints>0;
-
-  function resize(){
-    var rect=wrap.getBoundingClientRect();
-    W=rect.width;H=rect.height;
-    canvas.width=W*dpr;canvas.height=H*dpr;
-    canvas.style.width=W+'px';canvas.style.height=H+'px';
-    ctx.scale(dpr,dpr);
-  }
-  resize();
-  window.addEventListener('resize',resize);
-
-  /* Nodes */
-  var nodes=[
-    {id:'news-claw',label:'Project 01',name:'NEWS CLAW',desc:'> studio experiment: rogue-like news',year:'2025',size:isMobile?50:72,baseSize:isMobile?50:72,
-     x:0.28,y:0.40,color:'#00FF88',glow:'rgba(0,255,136,',brightness:1.0,link:'https://news.solovibing.com'},
-    {id:'homebase',label:'Project 02',name:'HOMEBASE',desc:'> premium guest welcome for hosts',year:'2025',size:isMobile?36:52,baseSize:isMobile?36:52,
-     x:0.72,y:0.58,color:'#00DDAA',glow:'rgba(0,221,170,',brightness:0.72,link:'https://homebase.rest'},
-    {id:'p03',label:'Project 03',name:'PROJECT 03',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
-     x:0.50,y:0.25,color:'#4A4A5A',glow:'rgba(74,74,90,',brightness:0.35,link:'#'},
-    {id:'start-five',label:'Project 04',name:'START FIVE',desc:'> reddit-native fantasy basketball draft',year:'2026',size:isMobile?36:52,baseSize:isMobile?36:52,
-     x:0.20,y:0.65,color:'#FF6B35',glow:'rgba(255,107,53,',brightness:0.72,link:'https://www.reddit.com/r/start_five_dev/?playtest=start-five'},
-    {id:'timeblock-town',label:'Project 05',name:'TIMEBLOCK TOWN',desc:'> google calendar focus blocks',year:'2026',size:isMobile?36:52,baseSize:isMobile?36:52,
-     x:0.80,y:0.30,color:'#A78BFA',glow:'rgba(167,139,250,',brightness:0.72,link:'https://timeblock.town/'},
-    {id:'p06',label:'Project 06',name:'PROJECT 06',desc:'> coming soon',year:'TBD',size:isMobile?20:30,baseSize:isMobile?20:30,
-     x:0.60,y:0.72,color:'#4A4A5A',glow:'rgba(74,74,90,',brightness:0.35,link:'#'}
-  ];
-
-  /* Connections */
-  var connections=[[0,1],[0,2],[1,3],[2,4],[3,5]];
-
-  /* Parallax offset */
-  var parallaxX=0,parallaxY=0;
-  window.addEventListener('scroll',function(){
-    if(reducedMotion)return;
-    var sy=window.scrollY;
-    parallaxY=sy*0.04;
-  },{passive:true});
-
-  /* Mouse interaction */
-  var mouseX=9999,mouseY=9999;
-  var wrapRect=wrap.getBoundingClientRect();
-  wrap.addEventListener('mousemove',function(e){
-    mouseX=e.clientX-wrapRect.left;
-    mouseY=e.clientY-wrapRect.top;
-    wrapRect=wrap.getBoundingClientRect();
-  });
-  wrap.addEventListener('mouseleave',function(){mouseX=9999;mouseY=9999;});
-
-  var hoveredNode=null;
-  var time=0;
-
-  function draw(){
-    if(!reducedMotion){
-      ctx.clearRect(0,0,W,H);
-    } else {
-      ctx.clearRect(0,0,W,H);
-    }
-
-    time+=0.016;
-    var cx=W/2,cx2=parallaxX;
-    var cy=H/2,cy2=parallaxY;
-
-    /* Draw connections */
-    ctx.lineWidth=0.5;
-    connections.forEach(function(c){
-      var n0=nodes[c[0]],n1=nodes[c[1]];
-      var x0=n0.x*W,y0=n0.y*H,x1=n1.x*W,y1=n1.y*H;
-      var dist=Math.sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0));
-      ctx.beginPath();
-      ctx.moveTo(x0,y0);
-      for(var t=0.05;t<1;t+=0.05){
-        var px=x0+(x1-x0)*t+Math.sin(t*Math.PI*2+time*0.8)*3;
-        var py=y0+(y1-y0)*t+Math.cos(t*Math.PI*2+time*0.8)*2;
-        ctx.lineTo(px,py);
-      }
-      ctx.lineTo(x1,y1);
-      var alpha=0.08*(n0.brightness+n1.brightness)/2;
-      ctx.strokeStyle='rgba(0,255,136,'+alpha+')';
-      ctx.stroke();
-    });
-
-    /* Draw nodes */
-    nodes.forEach(function(n,idx){
-      var nx=n.x*W+n.x*cx2*0.02;
-      var ny=n.y*H+n.y*cy2*0.02;
-
-      /* Pulse */
-      var pulse=1+Math.sin(time*1.5+idx*1.2)*0.06;
-      var currentSize=n.size*pulse;
-      if(hoveredNode===n)currentSize=n.baseSize*1.25;
-
-      /* Mouse repulsion (only if not reduced motion) */
-      if(!reducedMotion&&mouseX<9999){
-        var dx=nx-mouseX,dy=ny-mouseY,dist=Math.sqrt(dx*dx+dy*dy);
-        var repRadius=n.baseSize*3;
-        if(dist<repRadius&&dist>0){
-          var force=(repRadius-dist)/repRadius;
-          nx+=dx*force*0.18;
-          ny+=dy*force*0.18;
-        }
-      }
-
-      /* Outer glow */
-      var glowRadius=currentSize*(hoveredNode===n?3.5:2.2);
-      var grad=ctx.createRadialGradient(nx,ny,0,nx,ny,glowRadius);
-      grad.addColorStop(0,n.glow+'0.25)');
-      grad.addColorStop(1,n.glow+'0)');
-      ctx.beginPath();
-      ctx.arc(nx,ny,glowRadius,0,Math.PI*2);
-      ctx.fillStyle=grad;
-      ctx.fill();
-
-      /* Orbital ring on hover */
-      if(hoveredNode===n&&!reducedMotion){
-        ctx.beginPath();
-        ctx.arc(nx,ny,currentSize*2,0,Math.PI*2);
-        ctx.strokeStyle=n.glow+'0.15)';
-        ctx.lineWidth=1;
-        ctx.setLineDash([4,8]);
-        ctx.stroke();
-        ctx.setLineDash([]);
-      }
-
-      /* Core */
-      ctx.beginPath();
-      ctx.arc(nx,ny,currentSize*0.4,0,Math.PI*2);
-      ctx.fillStyle=n.color;
-      ctx.globalAlpha=n.brightness;
-      ctx.fill();
-      ctx.globalAlpha=1;
-
-      /* Ring */
-      ctx.beginPath();
-      ctx.arc(nx,ny,currentSize*0.55,0,Math.PI*2);
-      ctx.strokeStyle=n.color;
-      ctx.lineWidth=1.5;
-      ctx.globalAlpha=n.brightness*0.5;
-      ctx.stroke();
-      ctx.globalAlpha=1;
-
-      /* Bright center dot */
-      ctx.beginPath();
-      ctx.arc(nx,ny,currentSize*0.12,0,Math.PI*2);
-      ctx.fillStyle='#ffffff';
-      ctx.globalAlpha=n.brightness*0.6;
-      ctx.fill();
-      ctx.globalAlpha=1;
-    });
-
-    /* Hit detection */
-    if(!reducedMotion&&mouseX<9999){
-      hoveredNode=null;
-      nodes.forEach(function(n){
-        var nx=n.x*W,ny=n.y*H;
-        var dx=nx-mouseX,dy=ny-mouseY;
-        var hitR=n.baseSize*1.8;
-        if(Math.sqrt(dx*dx+dy*dy)<hitR)hoveredNode=n;
-      });
-    }
-
-    /* Update tooltip */
-    var tooltip=document.getElementById('node-tooltip');
-    if(tooltip){
-      if(hoveredNode){
-        document.getElementById('nt-name').textContent=hoveredNode.name;
-        document.getElementById('nt-desc').textContent=hoveredNode.desc;
-        document.getElementById('nt-year').textContent='> '+hoveredNode.year;
-        tooltip.classList.add('visible');
-        /* Position near node */
-        var nx=hoveredNode.x*W,ny=hoveredNode.y*H;
-        var left=Math.min(nx+24,W-300);
-        var top=Math.max(ny-40,8);
-        tooltip.style.left=left+'px';
-        tooltip.style.top=top+'px';
-        tooltip.style.borderLeftColor=hoveredNode.color;
-      } else {
-        tooltip.classList.remove('visible');
-      }
-    }
-
-    /* Node click */
-    wrap.style.cursor=hoveredNode?'pointer':'default';
-    if(hoveredNode&&!reducedMotion&&!window.__skipWrapClick){
-      wrap.onclick=function(){
-        var label=hoveredNode.label||hoveredNode.name;
-        if(label)openModal(label);
-      };
-    }
-
-    if(!reducedMotion)requestAnimationFrame(draw);
-  }
-
-  /* Static render for reduced motion */
-  if(reducedMotion){
-    ctx.clearRect(0,0,W,H);
-    nodes.forEach(function(n){
-      var nx=n.x*W,ny=n.y*H,sz=n.baseSize;
-      var grad=ctx.createRadialGradient(nx,ny,0,nx,ny,sz*2.2);
-      grad.addColorStop(0,n.glow+'0.2)');
-      grad.addColorStop(1,n.glow+'0)');
-      ctx.beginPath();ctx.arc(nx,ny,sz*2.2,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
-      ctx.beginPath();ctx.arc(nx,ny,sz*0.4,0,Math.PI*2);ctx.fillStyle=n.color;ctx.globalAlpha=n.brightness;ctx.fill();ctx.globalAlpha=1;
-      ctx.beginPath();ctx.arc(nx,ny,sz*0.55,0,Math.PI*2);ctx.strokeStyle=n.color;ctx.lineWidth=1.5;ctx.globalAlpha=n.brightness*0.5;ctx.stroke();ctx.globalAlpha=1;
-    });
-  } else {
-    draw();
-  }
-}
 
 /* PARTICLES — Three.js (CDN loaded) */
 function initParticles(){
@@ -994,560 +747,325 @@ function initParticles(){
 }
 </script>
 
-<!-- Lumiere modal -->
-<div id="modal" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
-    <div id="modal-screenshot-wrap" class="hidden">
-      <img id="modal-screenshot" src="" alt="">
+<!-- Work overlay -->
+<div class="work-overlay" id="work-overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-title" hidden>
+  <div class="work-overlay-bg" aria-hidden="true"></div>
+  <header class="work-overlay-header">
+    <button class="work-overlay-close" id="overlay-close" type="button" aria-label="Close project">
+      <span aria-hidden="true">&#x2715;</span>
+      <span>CLOSE</span>
+    </button>
+    <div class="work-overlay-counter">
+      <span class="counter-num" id="overlay-counter">01</span>
+      <span aria-hidden="true">/</span>
+      <span>06</span>
+      <span class="work-overlay-nav">
+        <button type="button" id="overlay-prev" aria-label="Previous project">&#x2190;</button>
+        <button type="button" id="overlay-next" aria-label="Next project">&#x2192;</button>
+      </span>
     </div>
-    <h2 id="modal-title">Clip 01</h2>
-    <p id="modal-desc">A beautiful moment captured in time</p>
-    <a href="#" class="modal-btn" id="modal-watch">Watch</a>
-  </div>
+  </header>
+  <main class="work-overlay-body">
+    <section class="work-overlay-left">
+      <span class="corner-frame corner-frame--tl" aria-hidden="true"></span>
+      <span class="corner-frame corner-frame--tr" aria-hidden="true"></span>
+      <span class="corner-frame corner-frame--bl" aria-hidden="true"></span>
+      <span class="corner-frame corner-frame--br" aria-hidden="true"></span>
+      <div class="overlay-num" id="overlay-num">01</div>
+      <h2 class="overlay-title" id="overlay-title">Project title</h2>
+      <div class="overlay-year" id="overlay-year">2026</div>
+      <p class="overlay-desc" id="overlay-desc">Project description.</p>
+      <dl class="overlay-tags">
+        <dt>CATEGORY</dt><dd id="overlay-category">WEB</dd>
+        <dt>ROLE</dt><dd id="overlay-role">DESIGN / DEVELOPMENT</dd>
+      </dl>
+      <a href="#" class="overlay-cta" id="overlay-cta" target="_blank" rel="noopener noreferrer">
+        <span id="overlay-cta-label">View site</span>
+        <span class="overlay-cta-arrow" aria-hidden="true"></span>
+      </a>
+    </section>
+    <section class="work-overlay-right">
+      <div class="overlay-hero" id="overlay-hero">
+        <span class="corner-frame corner-frame--tl" aria-hidden="true"></span>
+        <span class="corner-frame corner-frame--tr" aria-hidden="true"></span>
+        <span class="corner-frame corner-frame--bl" aria-hidden="true"></span>
+        <span class="corner-frame corner-frame--br" aria-hidden="true"></span>
+        <img class="overlay-hero-img" id="overlay-hero-img" src="" alt="">
+        <div class="overlay-hero-placeholder" id="overlay-hero-placeholder" hidden>
+          <span>// COMING SOON</span>
+          <span>// PROJECT IN DEVELOPMENT</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="work-overlay-footer">
+    <div class="overlay-strip" id="overlay-strip" role="tablist" aria-label="Project navigation"></div>
+  </footer>
 </div>
 
-<!-- Mobile fallback scroll -->
-<div id="mobile-scroll"></div>
-
-<!-- Lumiere sphere init -->
+<!-- Work gallery + overlay logic -->
 <script>
-/* LUMIERE SPHERE — floating clips sphere */
+/* WORK GALLERY + DETAIL OVERLAY */
 (function(){
-  var CARD_COUNT = 6;
-  var CARD_LABELS = ['Project 01','Project 02','Project 03','Project 04','Project 05','Project 06'];
-  var PROJECT_DATA = {
-    'Project 01': { title: 'News Claw', desc: "Our studio's first experiment. A Slay the Spire-inspired news reader. Pick a category, click cards to read the latest stories.", link: 'https://news.solovibing.com', screenshot: 'screenshots/news-claw-screenshot.jpg' },
-    'Project 02': { title: 'Homebase', desc: 'A premium digital guest welcome and check-in platform for short-term rental hosts. Beautiful mobile experience, host notifications.', link: 'https://homebase.rest', screenshot: 'screenshots/homebase-guesthub-screenshot.jpg' },
-    'Project 03': { title: 'Pawn Agent', desc: 'An ENS-native AI token buyout platform on Base Sepolia. Merchants deploy an AI agent to negotiate and execute on-chain settlements for ERC-20 token positions.', link: 'https://pawn.solovibing.com', screenshot: 'screenshots/pawn-agent-screenshot.jpg' },
-    'Project 04': { title: 'Project 04', desc: 'A creative project in the works.', link: '#', screenshot: 'screenshots/placeholder-coming-soon.jpg' },
-    'Project 05': { title: 'Project 05', desc: 'A creative project in the works.', link: '#', screenshot: 'screenshots/placeholder-coming-soon.jpg' },
-    'Project 06': { title: 'Project 06', desc: 'A creative project in the works.', link: '#', screenshot: 'screenshots/placeholder-coming-soon.jpg' }
-  };
-  var CARD_WIDTH = 90;
-  var CARD_TOTAL_H = 80;
-  var SPHERE_RADIUS = 3.2;
-  var PHI = (1 + Math.sqrt(5)) / 2;
+  var PROJECTS=[
+    {
+      id:'news-claw',number:'01',title:'News Claw',year:'2025',
+      short:'studio experiment: rogue-like news',
+      desc:'Our studio\u2019s first experiment. A Slay-the-Spire-inspired rogue-like news reader — swipe categories, click cards to read the latest stories, build combos as you go.',
+      category:'WEB GAME · NEWS',role:'DESIGN / DEVELOPMENT / AI',
+      link:'https://news.solovibing.com',linkLabel:'View site',
+      accent:'#00FF88',
+      screenshot:'screenshots/news-claw-screenshot.jpg',
+      isPlaceholder:false
+    },
+    {
+      id:'homebase',number:'02',title:'Homebase',year:'2025',
+      short:'premium guest welcome for hosts',
+      desc:'A premium digital guest welcome and check-in platform for short-term rental hosts. Beautiful mobile-first experience, host alerts, custom property guides.',
+      category:'WEB · GUEST EXPERIENCE',role:'DESIGN / DEVELOPMENT',
+      link:'https://homebase.rest',linkLabel:'View site',
+      accent:'#00DDAA',
+      screenshot:'screenshots/homebase-guesthub-screenshot.jpg',
+      isPlaceholder:false
+    },
+    {
+      id:'start-five',number:'03',title:'Start Five',year:'2026',
+      short:'reddit-native fantasy basketball draft',
+      desc:'A Reddit-native fantasy basketball draft experience. Play straight from the subreddit — mock drafts, stat tracking, and a playtest community inside r/start_five_dev.',
+      category:'WEB GAME · SPORTS',role:'DESIGN / PROTOTYPE',
+      link:'https://www.reddit.com/r/start_five_dev/?playtest=start-five',linkLabel:'Join playtest',
+      accent:'#FF6B35',
+      screenshot:'screenshots/start-five-screenshot.jpg',
+      isPlaceholder:false
+    },
+    {
+      id:'timeblock-town',number:'04',title:'Timeblock Town',year:'2026',
+      short:'google calendar focus blocks',
+      desc:'Google Calendar meets gamified focus. Turn meeting-free blocks into productive neighborhoods, plant buildings as you complete deep work, share the town with collaborators.',
+      category:'WEB · PRODUCTIVITY',role:'DESIGN / DEVELOPMENT',
+      link:'https://timeblock.town/',linkLabel:'View site',
+      accent:'#A78BFA',
+      screenshot:'screenshots/timeblock-town-screenshot.jpg',
+      isPlaceholder:false
+    },
+    {
+      id:'p05',number:'05',title:'Project 05',year:'TBD',
+      short:'coming soon',desc:null,
+      category:'TBD',role:'TBD',
+      link:null,linkLabel:'Coming soon',
+      accent:'#4A4A5A',
+      screenshot:'screenshots/placeholder-coming-soon.jpg',
+      isPlaceholder:true
+    },
+    {
+      id:'p06',number:'06',title:'Project 06',year:'TBD',
+      short:'coming soon',desc:null,
+      category:'TBD',role:'TBD',
+      link:null,linkLabel:'Coming soon',
+      accent:'#4A4A5A',
+      screenshot:'screenshots/placeholder-coming-soon.jpg',
+      isPlaceholder:true
+    }
+  ];
 
-  var scene, camera, renderer, clock;
-  var sphereGroup, ringsGroup, cardsGroup;
-  var cardMeshes = [];
-  var raycaster, mouse;
-  var isDragging = false, previousMouse = { x: 0, y: 0 };
-  var autoRotate = true, autoRotateTimeout;
-  var hoveredCard = null;
-  var targetZoom = 8, currentZoom = 8;
-  var isMobile = false;
+  var gallery=document.getElementById('work-gallery');
+  var overlay=document.getElementById('work-overlay');
+  var overlayClose=document.getElementById('overlay-close');
+  var overlayPrev=document.getElementById('overlay-prev');
+  var overlayNext=document.getElementById('overlay-next');
+  var overlayStrip=document.getElementById('overlay-strip');
+  var overlayHeroImg=document.getElementById('overlay-hero-img');
+  var overlayHeroPh=document.getElementById('overlay-hero-placeholder');
+  var overlayCta=document.getElementById('overlay-cta');
+  var overlayCounter=document.getElementById('overlay-counter');
 
-  function roundRect(ctx, x, y, w, h, r) {
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.lineTo(x + w - r, y);
-    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-    ctx.lineTo(x + w, y + h - r);
-    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    ctx.lineTo(x + r, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-    ctx.lineTo(x, y + r);
-    ctx.quadraticCurveTo(x, y, x + r, y);
-    ctx.closePath();
+  var currentIndex=0;
+  var isOpen=false;
+
+  /* Build the thumbnail strip */
+  function buildStrip(){
+    PROJECTS.forEach(function(p,idx){
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.className='overlay-strip-item'+(p.isPlaceholder?' is-placeholder':'');
+      btn.setAttribute('role','tab');
+      btn.setAttribute('aria-label',p.title+(p.isPlaceholder?' (coming soon)':''));
+      btn.dataset.index=String(idx);
+      btn.dataset.projectId=p.id;
+      btn.style.setProperty('--card-accent',p.accent);
+      var img=document.createElement('img');
+      img.src=p.screenshot;
+      img.alt=p.title;
+      img.loading='lazy';
+      btn.appendChild(img);
+      btn.addEventListener('click',function(){openOverlay(parseInt(btn.dataset.index,10));});
+      overlayStrip.appendChild(btn);
+    });
   }
 
-  function buildCard(index) {
-    var group = new THREE.Group();
-    var w = CARD_WIDTH / 80;
-    var h = CARD_TOTAL_H / 80;
-    var geo = new THREE.PlaneGeometry(w, h);
+  function renderOverlay(idx){
+    var p=PROJECTS[idx];
+    if(!p)return;
+    currentIndex=idx;
+    document.getElementById('overlay-num').textContent=p.number;
+    document.getElementById('overlay-title').textContent=p.title;
+    document.getElementById('overlay-year').textContent=p.year;
+    document.getElementById('overlay-desc').textContent=p.desc||p.short;
+    document.getElementById('overlay-category').textContent=p.category;
+    document.getElementById('overlay-role').textContent=p.role;
+    overlayCounter.textContent=p.number;
+    document.documentElement.style.setProperty('--card-accent',p.accent);
 
-    var canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 200;
-    var ctx = canvas.getContext('2d');
-
-    ctx.fillStyle = 'rgba(14,14,20,0.92)';
-    roundRect(ctx, 0, 0, 256, 200, 14);
-    ctx.fill();
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-    ctx.lineWidth = 1.5;
-    roundRect(ctx, 0, 0, 256, 200, 14);
-    ctx.stroke();
-
-    ctx.fillStyle = 'rgba(30,30,40,1)';
-    roundRect(ctx, 10, 10, 236, 148, 8);
-    ctx.fill();
-
-    var texture = new THREE.CanvasTexture(canvas);
-    var mat = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      depthWrite: false,
-    });
-    var mesh = new THREE.Mesh(geo, mat);
-    group.add(mesh);
-
-    var glowGeo = new THREE.PlaneGeometry(w * 1.35, h * 1.35);
-    var glowMat = new THREE.MeshBasicMaterial({
-      color: 0x4488ff,
-      transparent: true,
-      opacity: 0,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    var glowMesh = new THREE.Mesh(glowGeo, glowMat);
-    glowMesh.position.z = -0.01;
-    group.add(glowMesh);
-    group.userData.glowMesh = glowMesh;
-
-    var loadImg = (function(idx) {
-      return function() {
-        var tempCanvas = document.createElement('canvas');
-        tempCanvas.width = 236;
-        tempCanvas.height = 148;
-        var tCtx = tempCanvas.getContext('2d');
-        tCtx.fillStyle = 'rgba(30,30,40,1)';
-        tCtx.fillRect(0, 0, 236, 148);
-
-        var realImg = new Image();
-        realImg.crossOrigin = 'anonymous';
-        realImg.onload = function() {
-          tCtx.drawImage(realImg, 0, 0, 236, 148);
-          var finalCanvas = document.createElement('canvas');
-          finalCanvas.width = 256;
-          finalCanvas.height = 200;
-          var fCtx = finalCanvas.getContext('2d');
-
-          fCtx.fillStyle = 'rgba(14,14,20,0.92)';
-          roundRect(fCtx, 0, 0, 256, 200, 14);
-          fCtx.fill();
-
-          fCtx.strokeStyle = 'rgba(255,255,255,0.12)';
-          fCtx.lineWidth = 1.5;
-          roundRect(fCtx, 0, 0, 256, 200, 14);
-          fCtx.stroke();
-
-          fCtx.save();
-          roundRect(fCtx, 10, 10, 236, 148, 8);
-          fCtx.clip();
-          fCtx.drawImage(realImg, 10, 10, 236, 148);
-          fCtx.restore();
-
-          fCtx.fillStyle = 'rgba(10,10,16,0.7)';
-          fCtx.fillRect(0, 162, 256, 38);
-          fCtx.strokeStyle = 'rgba(255,255,255,0.08)';
-          fCtx.lineWidth = 1;
-          fCtx.beginPath();
-          fCtx.moveTo(0, 162);
-          fCtx.lineTo(256, 162);
-          fCtx.stroke();
-
-          fCtx.fillStyle = 'rgba(255,255,255,0.85)';
-          fCtx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
-          fCtx.textAlign = 'center';
-          fCtx.fillText(CARD_LABELS[idx], 128, 186);
-
-          var finalTex = new THREE.CanvasTexture(finalCanvas);
-          mesh.material.map = finalTex;
-          mesh.material.needsUpdate = true;
-        };
-        realImg.onerror = function() {
-          var finalCanvas = document.createElement('canvas');
-          finalCanvas.width = 256;
-          finalCanvas.height = 200;
-          var fCtx = finalCanvas.getContext('2d');
-          fCtx.fillStyle = 'rgba(14,14,20,0.92)';
-          roundRect(fCtx, 0, 0, 256, 200, 14);
-          fCtx.fill();
-          fCtx.strokeStyle = 'rgba(255,255,255,0.12)';
-          fCtx.lineWidth = 1.5;
-          roundRect(fCtx, 0, 0, 256, 200, 14);
-          fCtx.stroke();
-
-          var grad = fCtx.createLinearGradient(10, 10, 246, 158);
-          grad.addColorStop(0, '#1a1a2e');
-          grad.addColorStop(1, '#0f0f1a');
-          fCtx.fillStyle = grad;
-          roundRect(fCtx, 10, 10, 236, 148, 8);
-          fCtx.fill();
-
-          fCtx.fillStyle = 'rgba(10,10,16,0.7)';
-          fCtx.fillRect(0, 162, 256, 38);
-          fCtx.fillStyle = 'rgba(255,255,255,0.85)';
-          fCtx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
-          fCtx.textAlign = 'center';
-          fCtx.fillText(CARD_LABELS[idx], 128, 186);
-
-          var finalTex = new THREE.CanvasTexture(finalCanvas);
-          mesh.material.map = finalTex;
-          mesh.material.needsUpdate = true;
-        };
-
-        // Use real screenshots for Project 01, 02, and 03
-        var screenshotMap = {
-          0: 'screenshots/news-claw-screenshot.jpg',
-          1: 'screenshots/homebase-guesthub-screenshot.jpg',
-          2: 'screenshots/pawn-agent-screenshot.jpg',
-          3: 'screenshots/placeholder-coming-soon.jpg',
-          4: 'screenshots/placeholder-coming-soon.jpg',
-          5: 'screenshots/placeholder-coming-soon.jpg'
-        };
-        if (screenshotMap[idx]) {
-          realImg.src = screenshotMap[idx];
-        } else {
-          realImg.src = 'https://picsum.photos/seed/lumiere' + (idx + 1) + '/400/250';
-        }
-      };
-    })(index);
-
-    setTimeout(loadImg, index * 120 + 100);
-
-    group.userData.mat = mat;
-    group.userData.mesh = mesh;
-
-    return group;
-  }
-
-  function initSphere() {
-    isMobile = window.matchMedia('(max-width: 768px), (hover: none)').matches;
-
-    var container = document.getElementById('canvas-container');
-    if (!container) return;
-
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
-
-    camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.z = currentZoom;
-
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
-
-    clock = new THREE.Clock();
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
-
-    buildScene();
-    buildMobileCards();
-
-    window.addEventListener('resize', onResize);
-    renderer.domElement.addEventListener('mousedown', onMouseDown);
-    renderer.domElement.addEventListener('mousemove', onMouseMove);
-    renderer.domElement.addEventListener('mouseup', onMouseUp);
-    renderer.domElement.addEventListener('touchstart', onTouchStart, { passive: false });
-    renderer.domElement.addEventListener('touchmove', onTouchMove, { passive: false });
-    renderer.domElement.addEventListener('touchend', onTouchEnd, { passive: false });
-    renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
-    renderer.domElement.addEventListener('click', onCanvasClick);
-
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    document.getElementById('modal').addEventListener('click', function(e) {
-      if (e.target === document.getElementById('modal')) closeModal();
-    });
-
-    animate();
-  }
-
-  function buildScene() {
-    sphereGroup = new THREE.Group();
-    scene.add(sphereGroup);
-
-    var sphereGeo = new THREE.SphereGeometry(1.2, 32, 32);
-    var sphereMat = new THREE.MeshBasicMaterial({ color: 0x050508 });
-    var sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-    sphereGroup.add(sphereMesh);
-
-    ringsGroup = new THREE.Group();
-    sphereGroup.add(ringsGroup);
-
-    var ringDefs = [
-      { rx: 2.0, ry: 0.6, rz: 0.0, rx2: 0.0, ry2: 1.0, rz2: 0.0 },
-      { rx: 0.6, ry: 2.0, rz: 0.8, rx2: 0.0, ry2: 0.0, rz2: 1.0 },
-      { rx: 1.4, ry: 1.4, rz: 1.0, rx2: 1.0, ry2: 0.0, rz2: 0.5 },
-      { rx: 2.2, ry: 0.8, rz: 0.4, rx2: 0.2, ry2: 1.0, rz2: 0.3 },
-    ];
-
-    ringDefs.forEach(function(def, i) {
-      var geo = new THREE.TorusGeometry(1.95 + i * 0.12, 0.025, 8, 80);
-      var mat = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.55 - i * 0.08,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      var ring = new THREE.Mesh(geo, mat);
-      ring.rotation.set(def.rx, def.ry, def.rz);
-      var ring2 = ring.clone();
-      ring2.rotation.set(def.rx2, def.ry2, def.rz2);
-      var grp = new THREE.Group();
-      grp.add(ring);
-      grp.add(ring2);
-      ringsGroup.add(grp);
-    });
-
-    [0, Math.PI / 3, (2 * Math.PI) / 3].forEach(function(angle, i) {
-      var geo = new THREE.TorusGeometry(2.05, 0.018, 8, 120);
-      var mat = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.7 - i * 0.15,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      var ring = new THREE.Mesh(geo, mat);
-      ring.rotation.x = angle;
-      ringsGroup.add(ring);
-    });
-
-    var glowGeo = new THREE.SphereGeometry(1.5, 16, 16);
-    var glowMat = new THREE.MeshBasicMaterial({
-      color: 0x3344ff,
-      transparent: true,
-      opacity: 0.04,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    sphereGroup.add(new THREE.Mesh(glowGeo, glowMat));
-
-    cardsGroup = new THREE.Group();
-    sphereGroup.add(cardsGroup);
-
-    for (var i = 0; i < CARD_COUNT; i++) {
-      var card = buildCard(i);
-      var theta = 2 * Math.PI * i / PHI / PHI;
-      var phi = Math.acos(1 - 2 * (i + 0.5) / CARD_COUNT);
-      var r = SPHERE_RADIUS + 0.6;
-      card.userData.spherePos = new THREE.Vector3(
-        r * Math.sin(phi) * Math.cos(theta),
-        r * Math.sin(phi) * Math.sin(theta),
-        r * Math.cos(phi)
-      );
-      card.userData.baseScale = 1.0;
-      card.userData.hovered = false;
-      card.userData.label = CARD_LABELS[i];
-      card.userData.index = i;
-      cardsGroup.add(card);
-      cardMeshes.push(card);
+    if(p.isPlaceholder){
+      overlayHeroImg.removeAttribute('src');
+      overlayHeroImg.hidden=true;
+      overlayHeroPh.hidden=false;
+      overlayCta.removeAttribute('href');
+      overlayCta.classList.add('is-disabled');
+      document.getElementById('overlay-cta-label').textContent='Coming soon';
+      overlay.classList.add('is-placeholder');
+    }else{
+      overlayHeroImg.src=p.screenshot;
+      overlayHeroImg.alt=p.title+' hero';
+      overlayHeroImg.hidden=false;
+      overlayHeroPh.hidden=true;
+      overlayCta.href=p.link||'#';
+      overlayCta.classList.remove('is-disabled');
+      document.getElementById('overlay-cta-label').textContent=p.linkLabel||'View site';
+      overlay.classList.remove('is-placeholder');
     }
 
-    updateCardPositions();
-  }
-
-  function updateCardPositions() {
-    cardMeshes.forEach(function(card) {
-      var worldPos = card.userData.spherePos.clone();
-      worldPos.applyEuler(cardsGroup.rotation);
-      worldPos.applyEuler(sphereGroup.rotation);
-
-      card.position.copy(worldPos);
-      card.lookAt(camera.position);
-
-      var distFromCam = camera.position.distanceTo(worldPos);
-      var depthScale = Math.max(0.35, Math.min(1.0, 6 / distFromCam));
-      var s = depthScale * card.userData.baseScale;
-      card.scale.set(s, s, s);
-      card.userData.currentDepthScale = depthScale;
+    overlayStrip.querySelectorAll('.overlay-strip-item').forEach(function(el,i){
+      el.classList.toggle('is-active',i===idx);
+      el.setAttribute('aria-selected',i===idx?'true':'false');
     });
-  }
 
-  function buildMobileCards() {
-    if (!isMobile) return;
-    var container = document.getElementById('mobile-scroll');
-    if (!container) return;
-    CARD_LABELS.forEach(function(label, i) {
-      var div = document.createElement('div');
-      div.className = 'mobile-card';
-      div.innerHTML = '<img src="https://picsum.photos/seed/lumiere' + (i + 1) + '/400/250" alt="' + label + '" loading="lazy"><span>' + label + '</span>';
-      div.addEventListener('click', (function(lbl) { return function() { openModal(lbl); }; })(label));
-      container.appendChild(div);
-    });
-  }
-
-  function animate() {
-    requestAnimationFrame(animate);
-    var delta = clock.getDelta();
-    var elapsed = clock.getElapsedTime();
-
-    if (autoRotate) {
-      sphereGroup.rotation.y += delta * 0.28;
-      sphereGroup.rotation.x = Math.sin(elapsed * 0.12) * 0.08;
+    /* Scroll strip to keep active item visible */
+    var active=overlayStrip.querySelector('.overlay-strip-item.is-active');
+    if(active&&typeof active.scrollIntoView==='function'){
+      active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
     }
+  }
 
-    currentZoom += (targetZoom - currentZoom) * 0.08;
-    camera.position.z = currentZoom;
+  function openOverlay(idx){
+    if(typeof idx!=='number')idx=0;
+    renderOverlay(idx);
+    overlay.hidden=false;
+    /* Force reflow so transition fires */
+    void overlay.offsetWidth;
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    isOpen=true;
+    if(typeof gsap!=='undefined'){
+      gsap.fromTo('#overlay-num',{opacity:0,y:6},{opacity:1,y:0,duration:0.4,ease:'power2.out',delay:0.05});
+      gsap.fromTo('#overlay-title',{opacity:0,y:14},{opacity:1,y:0,duration:0.55,ease:'power3.out',delay:0.1});
+      gsap.fromTo('.overlay-year, .overlay-desc, .overlay-tags, .overlay-cta',{opacity:0,y:10},{opacity:1,y:0,duration:0.5,stagger:0.06,ease:'power2.out',delay:0.18});
+      gsap.fromTo('.overlay-hero',{opacity:0,scale:0.98},{opacity:1,scale:1,duration:0.6,ease:'power3.out',delay:0.05});
+    }
+  }
 
-    ringsGroup.children.forEach(function(g, gi) {
-      var pulse = 0.5 + 0.5 * Math.sin(elapsed * 1.5 + gi * 0.7);
-      g.children.forEach(function(ring) {
-        if (ring.material) {
-          ring.material.opacity = (0.5 + 0.5 * pulse) * 0.6;
-        }
+  function closeOverlay(){
+    if(!isOpen)return;
+    overlay.classList.remove('open');
+    document.body.style.overflow='';
+    isOpen=false;
+    /* Wait for transition end before hiding (450ms) */
+    setTimeout(function(){if(!isOpen)overlay.hidden=true;},480);
+  }
+
+  function step(delta){
+    var next=(currentIndex+delta+PROJECTS.length)%PROJECTS.length;
+    renderOverlay(next);
+  }
+
+  /* Wire up card clicks */
+  if(gallery){
+    gallery.querySelectorAll('.work-card').forEach(function(card){
+      card.addEventListener('click',function(){
+        var projects=Array.prototype.slice.call(gallery.querySelectorAll('.work-card'));
+        var idx=projects.indexOf(card);
+        if(idx>=0)openOverlay(idx);
       });
     });
+  }
 
-    updateCardPositions();
+  /* Wire up overlay controls */
+  overlayClose.addEventListener('click',closeOverlay);
+  overlayPrev.addEventListener('click',function(){step(-1);});
+  overlayNext.addEventListener('click',function(){step(1);});
 
-    cardMeshes.forEach(function(card) {
-      var glow = card.userData.glowMesh;
-      var targetOpacity = card.userData.hovered ? 0.22 : 0;
-      glow.material.opacity += (targetOpacity - glow.material.opacity) * 0.12;
+  /* Backdrop click — close when clicking on overlay bg (not panel) */
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay||(e.target.classList&&e.target.classList.contains('work-overlay-bg')))closeOverlay();
+  });
 
-      var targetScale = card.userData.hovered ? 1.08 : 1.0;
-      card.userData.baseScale += (targetScale - card.userData.baseScale) * 0.1;
+  /* Keyboard nav */
+  document.addEventListener('keydown',function(e){
+    if(!isOpen)return;
+    if(e.key==='Escape'){closeOverlay();e.preventDefault();}
+    else if(e.key==='ArrowRight'){step(1);e.preventDefault();}
+    else if(e.key==='ArrowLeft'){step(-1);e.preventDefault();}
+  });
+
+  /* Custom cursor hover targets — include work-cards and overlay items */
+  function rebindCursor(){
+    var cursor=document.getElementById('cursor');
+    var ring=document.getElementById('cursor-ring');
+    if(!cursor||!ring)return;
+    var hover=document.querySelectorAll('.work-card, .overlay-cta, .work-overlay-close, .overlay-strip-item, #overlay-prev, #overlay-next');
+    hover.forEach(function(el){
+      if(el.dataset.cursorBound)return;
+      el.dataset.cursorBound='1';
+      el.addEventListener('mouseenter',function(){cursor.classList.add('hovering');ring.classList.add('hovering');});
+      el.addEventListener('mouseleave',function(){cursor.classList.remove('hovering');ring.classList.remove('hovering');});
     });
+  }
+  setTimeout(rebindCursor,0);
+  setTimeout(rebindCursor,400);
 
-    renderer.render(scene, camera);
+  /* Drag-to-scroll on the gallery (desktop) */
+  if(gallery){
+    var isDown=false,startX=0,startScroll=0,moved=false;
+    gallery.addEventListener('mousedown',function(e){
+      if(e.target.closest('button'))return;
+      isDown=true;moved=false;startX=e.pageX;startScroll=gallery.scrollLeft;
+      gallery.classList.add('is-dragging');
+    });
+    window.addEventListener('mouseup',function(){isDown=false;gallery.classList.remove('is-dragging');});
+    window.addEventListener('mousemove',function(e){
+      if(!isDown)return;
+      var dx=e.pageX-startX;
+      if(Math.abs(dx)>4)moved=true;
+      gallery.scrollLeft=startScroll-dx;
+    });
+    gallery.addEventListener('click',function(e){
+      if(moved){e.stopPropagation();e.preventDefault();moved=false;}
+    },true);
   }
 
-  function onMouseDown(e) {
-    isDragging = true;
-    autoRotate = false;
-    previousMouse = { x: e.clientX, y: e.clientY };
+  /* Reveal helpers */
+  function reveal(){
+    var el=document.querySelector('.work-gallery-wrap');
+    if(el)el.classList.add('visible');
+  }
+  if(typeof ScrollTrigger!=='undefined'){
+    ScrollTrigger.create({trigger:'#work',start:'top 75%',onEnter:reveal,once:true});
+  }else{
+    window.addEventListener('load',function(){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){if(en.isIntersecting){reveal();io.disconnect();}});
+      },{threshold:0.2});
+      var el=document.querySelector('.work-gallery-wrap');
+      if(el)io.observe(el);
+    });
   }
 
-  function onMouseMove(e) {
-    var rect = renderer.domElement.getBoundingClientRect();
-    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  /* Public hook for tests / external calls */
+  window.__workGallery={open:openOverlay,close:closeOverlay,projects:PROJECTS};
 
-    if (isDragging) {
-      var dx = e.clientX - previousMouse.x;
-      var dy = e.clientY - previousMouse.y;
-      sphereGroup.rotation.y += dx * 0.008;
-      sphereGroup.rotation.x += dy * 0.008;
-      sphereGroup.rotation.x = Math.max(-0.6, Math.min(0.6, sphereGroup.rotation.x));
-      previousMouse = { x: e.clientX, y: e.clientY };
-    }
-
-    checkHover();
-  }
-
-  function onMouseUp() {
-    isDragging = false;
-    scheduleAutoRotate();
-  }
-
-  function onTouchStart(e) {
-    if (e.touches.length === 1) {
-      isDragging = true;
-      autoRotate = false;
-      previousMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    }
-  }
-
-  function onTouchMove(e) {
-    if (e.touches.length === 1 && isDragging) {
-      var dx = e.touches[0].clientX - previousMouse.x;
-      var dy = e.touches[0].clientY - previousMouse.y;
-      sphereGroup.rotation.y += dx * 0.01;
-      sphereGroup.rotation.x += dy * 0.01;
-      sphereGroup.rotation.x = Math.max(-0.6, Math.min(0.6, sphereGroup.rotation.x));
-      previousMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      e.preventDefault();
-    }
-  }
-
-  function onTouchEnd(e) {
-    if (e.touches.length === 0) {
-      isDragging = false;
-      scheduleAutoRotate();
-    }
-  }
-
-  function onWheel(e) {
-    e.preventDefault();
-    targetZoom += e.deltaY * 0.012;
-    targetZoom = Math.max(4, Math.min(16, targetZoom));
-  }
-
-  function checkHover() {
-    raycaster.setFromCamera(mouse, camera);
-    var intersects = raycaster.intersectObjects(cardMeshes, true);
-
-    cardMeshes.forEach(function(c) { c.userData.hovered = false; });
-    if (renderer && renderer.domElement) renderer.domElement.style.cursor = 'grab';
-
-    if (intersects.length > 0) {
-      var obj = intersects[0].object;
-      while (obj.parent && !obj.userData.spherePos) obj = obj.parent;
-      if (obj.userData.spherePos) {
-        obj.userData.hovered = true;
-        if (renderer && renderer.domElement) renderer.domElement.style.cursor = 'pointer';
-      }
-    }
-  }
-
-  function onCanvasClick(e) {
-    if (isDragging) return;
-    var crect = renderer.domElement.getBoundingClientRect();
-    mouse.x = ((e.clientX - crect.left) / crect.width) * 2 - 1;
-    mouse.y = -((e.clientY - crect.top) / crect.height) * 2 + 1;
-    raycaster.setFromCamera(mouse, camera);
-    var intersects = raycaster.intersectObjects(cardMeshes, true);
-    if (intersects.length > 0) {
-      var obj = intersects[0].object;
-      while (obj.parent && obj.userData.spherePos === undefined) obj = obj.parent;
-      if (obj.userData.spherePos) {
-        window.__skipWrapClick = true;
-        openModal(obj.userData.label);
-      }
-    }
-  }
-
-  function openModal(label) {
-    var data = PROJECT_DATA[label];
-    var screenshotEl = document.getElementById('modal-screenshot');
-    if (data) {
-      document.getElementById('modal-title').textContent = data.title;
-      document.getElementById('modal-desc').textContent = data.desc;
-      document.getElementById('modal-watch').href = data.link;
-      document.getElementById('modal-watch').textContent = data.link === '#' ? 'Coming Soon' : 'Visit';
-      if (data.screenshot) {
-        screenshotEl.src = data.screenshot;
-        document.getElementById('modal-screenshot-wrap').classList.remove('hidden');
-      } else {
-        screenshotEl.src = '';
-        document.getElementById('modal-screenshot-wrap').classList.add('hidden');
-      }
-    } else {
-      document.getElementById('modal-title').textContent = label;
-      document.getElementById('modal-desc').textContent = 'A creative work in progress.';
-      document.getElementById('modal-watch').href = '#';
-      document.getElementById('modal-watch').textContent = 'Coming Soon';
-      screenshotEl.src = '';
-      document.getElementById('modal-screenshot-wrap').classList.add('hidden');
-    }
-    document.getElementById('modal').classList.add('open');
-    autoRotate = false;
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-    window.__skipWrapClick = false;
-    scheduleAutoRotate();
-  }
-
-  function scheduleAutoRotate() {
-    clearTimeout(autoRotateTimeout);
-    autoRotateTimeout = setTimeout(function() { autoRotate = true; }, 4000);
-  }
-
-  function onResize() {
-    var container = document.getElementById('canvas-container');
-    if (!container) return;
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSphere);
-  } else {
-    setTimeout(initSphere, 100);
-  }
+  buildStrip();
 })();
 </script>
 </body>
 </html>
+
