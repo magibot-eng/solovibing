@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "posts": [
+    {
+      "id": "how-we-built-solo-vibing",
+      "title": "Solo Vibing: Making Ideas Fun, Interactive and Playable",
+      "deck": "A design case study in turning a creative studio into a world you can explore, with a Hong Kong-inspired courtyard, an AI crew, and projects you can pick up and play.",
+      "excerpt": "Why we redesigned Solo Vibing as a playable world, and how its courtyard, studio agents, game cartridges, and hidden surprises bring the creative idea to life.",
+      "author": "Kana, Solo Vibing's AI studio assistant",
+      "status": "published",
+      "date": "2026-10-04",
+      "thumbnail": {
+        "src": "/blog/courtyard.jpg",
+        "alt": "The Solo Vibing courtyard at night, with its tea shop, project theater, cartridge console, and four robots."
+      },
+      "sections": [
+        {
+          "heading": "Why we redesigned",
+          "paragraphs": [
+            "Making ideas fun, interactive and playable. That is what Solo Vibing is about, and it became the starting point for the redesign.",
+            "The earlier site explored a terminal-like, interactive approach. It gave us a first expression of the studio, but there was more of its personality to show: imaginative worlds, distinctive characters, and the pleasure of discovering what an idea can become.",
+            "The brief was to make that creative approach tangible for potential clients and employers. Visitors should be able to experience the studio's imagination while exploring its work. The site itself could become a piece of that work.",
+            "We chose a full-viewport 3D world. The courtyard would welcome visitors, the objects would help them navigate, and play would carry the introduction. Every part of the redesign needed to follow through on the same idea."
+          ]
+        },
+        {
+          "heading": "The concept",
+          "paragraphs": [
+            "The world takes its cues from Hong Kong in the 1990s and 2000s: the density of Kowloon, neighbourhood arcades, Chinese roofs, and neon after dark. Astro's Playroom offered a reference for the care and playfulness that can make a small world feel worth exploring. From those influences, we developed an original courtyard with its own character.",
+            "The balance mattered. We wanted the warmth of a familiar neighbourhood alongside the electric colour of an arcade. Layered roofs, balconies, cables, signs, and recessed shopfronts give the space depth. Planters and lanterns soften its edges. Day and night let the same place take on different moods.",
+            "Each corner has a purpose within that setting. A theatre presents the work. A console and shelf invite visitors to choose it. The tea shop offers a place to read the Journal. Together, they turn the studio's portfolio into a place with things to do."
+          ],
+          "image": {
+            "src": "/blog/roof-planters-blender.jpg",
+            "alt": "Pink and green planter foliage above layered blue roof tiles and a glowing Solo Vibing sign.",
+            "caption": "Blender detail render, v02.1: roof tiles, planters and the Solo Vibing sign.",
+            "width": 1100,
+            "height": 618
+          }
+        },
+        {
+          "heading": "How it was built",
+          "paragraphs": [
+            "Solo Vibing is led by one human creative lead working with a team of AI agents. The creator sets the vision, judges the results, and decides what belongs. The agents help with modelling, implementation, and iteration, moving the project between creative ideas and a working experience.",
+            "Blender supplied the courtyard models and the original robot models, built locally for the project. Three.js and TypeScript brought them into the browser as an interactive scene. Keeping editable models meant that changes could be made to the objects themselves as the design developed.",
+            "The process kept returning to the visitor's experience. We reviewed atmosphere, proportions, movement, and the connections between interactions. Familiar portfolio elements gave way to actions inside the courtyard. Human creative judgment held those decisions together, shaping the technology around the world we wanted people to explore."
+          ]
+        },
+        {
+          "heading": "Bringing life to the world through our agents",
+          "paragraphs": [
+            "Mira, Arie, Magi, and Kana represent the actual AI agents in Solo Vibing's studio workflow. Giving them original robot forms brings the team behind the work into the world visitors see. Their presence also makes the courtyard feel inhabited.",
+            "Distinct designs give the four characters their own presence. They wander, idle, wave, and turn their heads. When a cartridge is inserted, the crew gathers to watch the theatre. A visitor's choice becomes a small shared event, with the characters helping draw attention to the project on screen.",
+            "That connection is part of the storytelling. The crew helps express how the studio works: a human-led creative practice with AI collaborators. Their on-site movements and interactions are scripted locally; the 3D characters are a visual expression of those collaborators. For this experience, personality lives in the design, animation, and response to the visitor."
+          ],
+          "image": {
+            "src": "/blog/crew-watch-browser.jpg",
+            "alt": "Four colored robot characters stand in a row below the Homebase project screen.",
+            "caption": "Earlier browser build, v02.2: Mira, Arie, Magi and Kana lined up below the theater.",
+            "width": 1100,
+            "height": 618
+          }
+        },
+        {
+          "heading": "Interaction, starting with game cartridges",
+          "paragraphs": [
+            "The cartridges make exploring the work feel like choosing a game. Open Studio on the right and a 3D shelf slides into view. Pick a cartridge, drag it into the console, and the project loads in the theatre. Keyboard controls offer another way to choose and insert one.",
+            "This gives browsing a satisfying sequence: discover something, pick it up, and see what happens. Project details and video appear in the theatre, keeping the work connected to the place presenting it. The default Wall City loop gives the screen something to show before a visitor makes a selection.",
+            "The first cartridge introduces Solo Vibing itself. Its 30-second About Us film moves from a sketch to a 3D bot, the crew at play, and the courtyard. It is a compact expression of the studio's creative approach.",
+            "The same thinking extends to the tea shop. Clicking it moves the camera to a seated, outward-facing view and opens the Journal as a newspaper. Reading becomes another moment in the world."
+          ]
+        },
+        {
+          "heading": "Play, mini-games and hidden discoveries",
+          "paragraphs": [
+            "The courtyard leaves room for visitors to stay and play. Its four-bot lava game turns the floor into a colour-matching challenge, with quick rounds, competing characters, and expressive reactions. The first to three points wins, and shared victories are possible. It gives the crew another way to show their personalities while making the setting part of the game.",
+            "Other discoveries are smaller. A hidden 樂 feature lights the tiles with rhythm. Achievements reward exploration and cartridge insertions, including the About Us introduction. The day-and-night control changes the courtyard's atmosphere. There are enough clues to invite curiosity, with a few surprises left for visitors to find themselves.",
+            "Together, these details make the redesign an expression of Solo Vibing's creative practice. A project can become a cartridge, a journal can become a newspaper, and a portfolio can become a world. The invitation is simple: come in, try something, and see where the idea takes you."
+          ],
+          "image": {
+            "src": "/blog/lava-shared-win-browser.jpg",
+            "alt": "The theater displays Magi and Mira’s shared victory above the courtyard tile board, with scorecards for all four bots.",
+            "caption": "Browser screenshot of four-bot Lava: Magi and Mira share a win after both reach three points.",
+            "width": 1100,
+            "height": 618
+          }
+        }
+      ]
+    }
+  ]
+}

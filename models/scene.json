@@ -1,0 +1,33 @@
+{
+  "url": "/models/courtyard-v02.4-flat-theme-meshopt.glb",
+  "version": "courtyard-v02.4-flat-theme-meshopt",
+  "prebatched": true,
+  "scale": 1,
+  "offset": [
+    0,
+    0,
+    0
+  ],
+  "rotationY": 0,
+  "selectControl": "SelectButton",
+  "agents": [
+    {
+      "name": "Mira",
+      "url": "/models/bots/Mira.glb"
+    },
+    {
+      "name": "Arie",
+      "url": "/models/bots/Arie.glb"
+    },
+    {
+      "name": "Magi",
+      "url": "/models/bots/Magi.glb"
+    },
+    {
+      "name": "Kana",
+      "url": "/models/bots/Kana.glb"
+    }
+  ],
+  "themeControl": "ThemeToggle",
+  "floorControl": "LeSign"
+}
