@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" role="img" aria-labelledby="title desc">
+<title id="title">What’s Happenin’</title><desc id="desc">An illustrated night map of Vancouver, with event markers by the harbour and across the city.</desc>
+<defs>
+ <linearGradient id="water" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#15384b"/><stop offset="1" stop-color="#071c29"/></linearGradient>
+ <linearGradient id="land" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#233d43"/><stop offset="1" stop-color="#13292e"/></linearGradient>
+ <linearGradient id="shade" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset=".42" stop-color="#071921" stop-opacity="0"/><stop offset="1" stop-color="#071921" stop-opacity=".99"/></linearGradient>
+ <pattern id="ripple" width="32" height="22" patternUnits="userSpaceOnUse"><path d="M2 6h8m12 11h8" stroke="#87c5c9" stroke-opacity=".105"/></pattern>
+ <clipPath id="landclip"><path d="M-5 24 960 25 960 111Q855 112 819 176L757 203 693 192 610 215 527 207 465 170 404 185 354 172 290 138 235 158 184 110 84 129-5 110ZM-8 620V368l64-28 48 14 110-28 43-31 35-5 36 24 39-18 25-38 50-29 51 32 30 40 63-5 51-28 49 31 56-25 95-4 49-40 54 1v453Z"/></clipPath>
+ <g id="pin"><circle r="27" fill="currentColor" opacity=".15"/><circle r="20" fill="#0b2028" stroke="currentColor" stroke-width="2"/><path d="M0-10a7 7 0 0 0-7 7c0 5 7 12 7 12s7-7 7-12a7 7 0 0 0-7-7m0 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6" fill="currentColor" fill-rule="evenodd"/></g>
+</defs>
+<rect width="960" height="620" fill="url(#water)"/><rect width="960" height="620" fill="url(#ripple)"/>
+<g clip-path="url(#landclip)">
+ <rect width="960" height="620" fill="url(#land)"/>
+ <path d="M-20 328 104 369 247 302 337 326 406 227 478 214 537 286 506 350 578 390 651 342 740 372 872 317l95-38M-10 486l142-85 226-16 122 43 217-4 102 53 190-45M114 629l36-80 1-192M385 645l-11-307 74-113M591 639l-1-299M740 621l1-301M905 636V270M35 102l277 21 171 26 124-18 231 34 145-72" fill="none" stroke="#7ab3a9" stroke-width="5" opacity=".56"/>
+ <path d="M-10 419l373-15 107 47 483-12M-10 461l191-29 194 6 229 50 361-20M-10 508l199-46 214 22 167 37 410-23M0 550l174-47 271 8 113 38 402 2M0 589l213-47 166 15 135 20 463 1M91 222l-4 372M192 280v314M249 282v351M313 283v340M433 210l-6 410M502 250v390M548 282v370M630 297v333M681 272v364M793 285v336M853 262v370M58 82l239 15 162 31 184-20 186 27 158-67" fill="none" stroke="#80bbb242" stroke-width="2"/>
+ <path d="M52 341l66-18 9 62-58 20ZM265 286l31-9 39 28-20 21-39-12ZM738 439l50 5-5 36-43-9ZM623 71l88-17 22 60-80 8Z" fill="#416b59" opacity=".66"/>
+</g>
+<path d="M42 56h63M42 56v48M918 56h-63m63 0v48M42 564h63m-63 0v-48m876 48h-63m63 0v-48" fill="none" stroke="#83c6b1" stroke-width="2" opacity=".65"/>
+<g fill="#b5dad2" font-family="Arial,sans-serif" font-weight="700" font-size="15" letter-spacing="4" opacity=".82"><text x="256" y="222" transform="rotate(-9 256 222)">BURRARD INLET</text><text x="510" y="334">VANCOUVER</text></g>
+<use href="#pin" x="354" y="318" color="#f1c57a"/><use href="#pin" x="448" y="272" color="#9ee1c3"/><use href="#pin" x="561" y="367" color="#f8aa9a"/><use href="#pin" x="692" y="305" color="#96ccec"/><use href="#pin" x="791" y="407" color="#f1c57a"/><use href="#pin" x="226" y="379" color="#96ccec"/>
+<rect y="330" width="960" height="290" fill="url(#shade)"/>
+<path d="M56 500h45" stroke="#a0e8c4" stroke-width="3"/>
+<text x="56" y="480" fill="#a0e8c4" font-family="Arial,sans-serif" font-size="19" font-weight="700" letter-spacing="4">LOCAL EVENT MAP</text>
+<text x="54" y="560" fill="#f5efe0" font-family="Arial,sans-serif" font-size="72" font-weight="700" letter-spacing="-2">What’s Happenin’</text>
+</svg>
